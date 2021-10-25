@@ -18,22 +18,37 @@ import Groups from "./components/pages/Groups/Groups";
 
 function App() {
   
+  const isLoggedIn = useSelector(state=>state.authReducer.isLoggedIn);
+
   useValidateToken();
 
   return (
     <>
     <Router>
           <Switch>
-            <ChakraProvider>
+          <ChakraProvider>
+              <Route
+              exact
+              path="/"
+              render={()=>{
+                return(
+                  isLoggedIn ? 
+                  <Redirect to='/admin/home' /> :
+                  <Redirect to='/login' />
+                )
+              }} 
+              />
               <Route path="/login" component={Login}/>
-              <PrivateRoute exact path="/register" component={Register} rolesRestriction={[roles.SuperAdmin]}/>
               <Route path="/requestresetpassword" component={RequestResetPassword}/>
               <Route path="/resetpassword" component={ResetPassword}/>
               <Route path="/confirmemail/:id/:token" component={ConfirmEmail} />
-              <MainLayout>
-                <PrivateRoute exact path="/" component={Home}/>
-                <PrivateRoute exact path="/groups" component={Groups}/>
-              </MainLayout> 
+              <Route path="/admin">
+                <MainLayout>
+                  <PrivateRoute path="/admin/home" component={Home}/>
+                  <PrivateRoute path="/admin/groups" component={Groups}/>
+                  <PrivateRoute exact path="/admin/register" component={Register} rolesRestriction={[roles.SuperAdmin]}/>
+                </MainLayout>
+              </Route>
             </ChakraProvider>
           </Switch>
       </Router>

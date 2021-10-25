@@ -6,7 +6,7 @@ export function useValidateToken(){
 
     const dispatch = useDispatch();
     let expiryDate = useSelector(state=>state.authReducer.jwtExpiryDate);
-
+    
     useEffect(()=>{
         
         expiryDate = Date.parse(expiryDate);

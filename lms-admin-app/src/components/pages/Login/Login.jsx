@@ -35,7 +35,7 @@ const Login = () => {
     }
 
 
-    if (isLoggedIn) return <Redirect to="/" />;
+    if (isLoggedIn) return <Redirect to="/admin/home" />;
 
 
     return (

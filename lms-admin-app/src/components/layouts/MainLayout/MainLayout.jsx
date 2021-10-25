@@ -40,8 +40,8 @@ import { ReactText } from 'react';
 
 
 const LinkItems = [
-  { name: 'Home', icon: FiHome, path:"/" },
-  { name: 'Groups', icon: GrGroup, path:'/groups' },
+  { name: 'Home', icon: FiHome, path:"/admin/home" },
+  { name: 'Groups', icon: GrGroup, path:'/admin/groups'},
   { name: 'Explore', icon: FiCompass, path:"/" },
   { name: 'Favourites', icon: FiStar, path:"/" },
   { name: 'Settings', icon: FiSettings, path:"/" },
