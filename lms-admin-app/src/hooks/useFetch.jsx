@@ -6,7 +6,7 @@ import { authCreator } from "../redux/authCreator";
 export function useFetch(url){
 
     const dispatch = useDispatch();
-    const [data, setData] = useState({});
+    const [data, setData] = useState([]);
     
     useEffect(()=>{
         dispatch(authCreator.setIsFetching());
@@ -25,8 +25,8 @@ export function useFetch(url){
                     dispatch(authCreator.disableIsFetching());
                 }
             })
-            console.log('async')
-    },url);
+            console.log(data)
+    },[url]);
 
     return data;
 

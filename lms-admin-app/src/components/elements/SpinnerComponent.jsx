@@ -11,6 +11,7 @@ const SpinnerComponent = React.memo(()=> {
         {
             isFetching ? 
             <Spinner
+            pos='absolute'
             thickness="4px"
             speed="0.65s"
             emptyColor="gray.200"
@@ -18,6 +19,7 @@ const SpinnerComponent = React.memo(()=> {
             size="xl"
             /> : null
         }
+        
         </>
     );
 }) 
