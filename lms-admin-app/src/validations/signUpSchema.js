@@ -30,14 +30,14 @@ const signUpSchema = Yup.object().shape(
         .required('No password provided')
         .oneOf([Yup.ref('password'), null], 'Passwords must match'),
 
-        // roles: Yup.array()
-        // .min(1, "Assign at least 1 role!")
-        // .of(
-        //   Yup.object().shape({
-        //     label: Yup.string().required(),
-        //     value: Yup.string().required()
-        //   })
-        // )
+        roles: Yup.array()
+        .min(1, "Assign at least 1 role!")
+        .of(
+          Yup.object().shape({
+            label: Yup.string().required(),
+            value: Yup.string().required()
+          })
+        )
     }
 );
 

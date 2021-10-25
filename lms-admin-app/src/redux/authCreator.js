@@ -78,27 +78,34 @@ const setAuthMessage = message =>{
 }
 
 
-const signUp = (userObj) => dispatch => {
+const signUp = (userObj,token) => dispatch => {
+    let roles=[];
+    userObj.roles.map(r=>roles.push(r.value))
     dispatch({
         type: actionTypes.SIGN_UP
     })
     axios({
         method: 'post',
         url: process.env.REACT_APP_REGISTER_API,
+        headers:{"Authorization":`Bearer ${token}`},
         data: {
             name: userObj.name,
             surname: userObj.surname,
             email:userObj.email,
             username: userObj.username,
-            password: userObj.password
+            password: userObj.password,
+            roles:roles
         }
     })
         .then(function (response) {
-            
+            dispatch({
+                type: actionTypes.SIGN_UP_COMPLETE
+            })
         })
         .catch(function (error) {
             // handle error
-            if(error.message == "Network Error"){
+
+            if(error.message == "Network Error" || error.message == "Request failed with status code 401"){
                 dispatch(setAuthError(error.message))
             }
             else{

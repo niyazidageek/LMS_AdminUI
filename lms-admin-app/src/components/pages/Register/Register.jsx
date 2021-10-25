@@ -34,11 +34,17 @@ import {userRoles} from '../../../utils/roles';
 
 
 const Register = () => {
+
     const dispatch = useDispatch();
+
     const isFetching = useSelector(state => state.authReducer.isFetching)
-    function handleSubmit(values) {
-        // dispatch(authCreator.signUp(values));
-        console.log(values);
+
+    const token = useSelector(state => state.authReducer.jwt)
+
+    function handleSubmit(values) { 
+
+        dispatch(authCreator.signUp(values,token));
+
     }
 
     return (
@@ -155,24 +161,16 @@ const Register = () => {
                                     </FormControl>
 
                                     <FormControl id="roles">
-                                        {/* <Field
-                                            name="roles"
-                                            options={userRoles}
-                                            component={Select}
-                                            placeholder="Assign a role"
-                                            isMulti={true}
-                                            
-                                        /> */}
                                         <Field  name="roles">
                                             {({field, form}) => (
-                                                // field.value = [{label:"Admin", value:"Admin"}],
-                                                console.log(field),
                                                 <FormControl isInvalid={form.errors.roles && form.touched.roles}>
                                                     <FormLabel htmlFor="confirmPassword">Assign roles</FormLabel>
                                                     <Select
                                                     isMulti
                                                     name="roles"
-                                                    onChange={option=>form.setFieldValue(field.name, option)}
+                                                    onChange={option=>{
+                                                        form.setFieldValue(field.name, option);
+                                                    }}
                                                     options={userRoles}
                                                     placeholder="Select roles"
                                                     closeMenuOnSelect={false}
