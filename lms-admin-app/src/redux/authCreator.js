@@ -254,7 +254,17 @@ const disableAuthMessage = () =>{
     }
 }
 
+const setIsFetching = () =>{
+    return{
+        type: actionTypes.SET_IS_FETCHING
+    }
+}
 
+const disableIsFetching = () =>{
+    return{
+        type: actionTypes.DISABLE_IS_FETCHING
+    }
+}
 
 export const authCreator = {
     setUser,
@@ -267,5 +277,7 @@ export const authCreator = {
     resetPassword,
     disableAuthMessage,
     sendConfirmEmail,
-    confirmEmail
+    confirmEmail,
+    setIsFetching,
+    disableIsFetching
 }

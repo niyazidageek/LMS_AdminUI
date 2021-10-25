@@ -37,6 +37,8 @@ import {GrGroup} from 'react-icons/gr'
 import { useSelector } from "react-redux";
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
+import { AuthErrorAlert } from '../../alerts/AuthErrorAlert';
+import { AuthMessageAlert } from '../../alerts/AuthMessageAlert';
 
 
 const LinkItems = [
@@ -51,6 +53,9 @@ export default function MainLayout({children})
 {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
+    <>
+    <AuthErrorAlert />
+    <AuthMessageAlert />
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
       <SidebarContent
         onClose={() => onClose}
@@ -74,6 +79,7 @@ export default function MainLayout({children})
         {children}
       </Box>
     </Box>
+    </>
   );
 }
 

@@ -53,6 +53,18 @@ const authReducer = ( state = initialState, action) =>{
             ...state,
             isFetching: true,
         }
+        case actionTypes.SET_IS_FETCHING:{
+            return{
+                ...state,
+                isFetching:true
+            }
+        }
+        case actionTypes.DISABLE_IS_FETCHING:{
+            return{
+                ...state,
+                isFetching:false
+            }
+        }
         case actionTypes.SEND_CONFIRM_EMAIL_COMPLETE:
             return{
                 ...state,
