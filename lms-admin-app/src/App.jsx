@@ -15,6 +15,7 @@ import { useValidateToken } from "./hooks/useValidateToken";
 import {roles} from './utils/roles'
 import MainLayout from "./components/layouts/MainLayout/MainLayout";
 import Groups from "./components/pages/Groups/Groups";
+import GroupDetail from "./components/pages/Groups/GroupDetail"
 
 function App() {
   
@@ -45,7 +46,10 @@ function App() {
               <Route path="/admin">
                 <MainLayout>
                   <PrivateRoute path="/admin/home" component={Home}/>
-                  <PrivateRoute path="/admin/groups" component={Groups}/>
+                    <Route path="/admin/groups">
+                    <PrivateRoute path="/admin/groups/all" component={Groups} />
+                    <PrivateRoute path="/admin/groups/details/:id" component={GroupDetail}/>
+                    </Route>
                   <PrivateRoute exact path="/admin/register" component={Register} rolesRestriction={[roles.SuperAdmin]}/>
                 </MainLayout>
               </Route>

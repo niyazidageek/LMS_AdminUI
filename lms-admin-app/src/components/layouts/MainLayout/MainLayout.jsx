@@ -43,7 +43,7 @@ import { AuthMessageAlert } from '../../alerts/AuthMessageAlert';
 
 const LinkItems = [
   { name: 'Home', icon: FiHome, path:"/admin/home" },
-  { name: 'Groups', icon: GrGroup, path:'/admin/groups'},
+  { name: 'Groups', icon: GrGroup, path:'/admin/groups/all'},
   { name: 'Explore', icon: FiCompass, path:"/" },
   { name: 'Favourites', icon: FiStar, path:"/" },
   { name: 'Settings', icon: FiSettings, path:"/" },
