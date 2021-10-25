@@ -18,9 +18,12 @@ const signIn = (userObj) => dispatch => {
         .then(function (response) {
             // handle success
             if(userObj.rememberMe){   
-                dispatch(setUser({
+                dispatch(setUser({                 
                     email: userObj.email,
                     jwt: response.data.token,
+                    profileName: response.data.username,
+                    name: response.data.name,
+                    surname: response.data.surname,
                     jwtExpiryDate: response.data.expiryDate,
                     rememberMe:userObj.rememberMe,
                     roles:response.data.roles
@@ -32,6 +35,9 @@ const signIn = (userObj) => dispatch => {
                 date = date.toISOString();
                 dispatch(setUser({
                     email: userObj.email,
+                    profileName: response.data.username,
+                    name: response.data.name,
+                    surname: response.data.surname,
                     jwt: response.data.token,
                     jwtExpiryDate: date,
                     rememberMe:userObj.rememberMe,

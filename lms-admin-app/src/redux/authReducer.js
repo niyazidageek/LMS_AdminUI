@@ -10,6 +10,9 @@ const initialState = {
     message:null,
     isMailConfirmed:false,
     rememberMe:false,
+    name:null,
+    surname:null,
+    email:null,
     roles:[]
 }
 
@@ -19,7 +22,10 @@ const authReducer = ( state = initialState, action) =>{
             console.log(action);
             return {
                 ...state,
-                profileName: action.payload.email,
+                profileName: action.payload.profileName,
+                email: action.payload.email,
+                name: action.payload.name,
+                surname: action.payload.surname,
                 isLoggedIn: true,
                 isFetching: false,
                 jwt: action.payload.jwt,

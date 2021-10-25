@@ -8,7 +8,7 @@ import validateEmail from '../../../validations/validateEmail';
 import validatePassword from '../../../validations/validatePassword';
 import { NavLink } from 'react-router-dom';
 import {Dropdown} from 'semantic-ui-react'
-import Select, { CreatableSelect } from '../../../utils/chakra-ui-react-select'
+import { CreatableSelect, Select } from 'chakra-react-select'
 import {
     FormControl,
     FormLabel,

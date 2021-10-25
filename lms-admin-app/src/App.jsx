@@ -13,26 +13,27 @@ import ResetPassword from "./components/pages/ResetPassword/ResetPassword";
 import ConfirmEmail from "./components/pages/EmailConfirmation/ConfirmEmail";
 import { useValidateToken } from "./hooks/useValidateToken";
 import {roles} from './utils/roles'
+import MainLayout from "./components/layouts/MainLayout/MainLayout";
+import Groups from "./components/pages/Groups/Groups";
 
 function App() {
   
   useValidateToken();
-
-  useEffect(()=>{
-    console.log('renderMain')
-  })
 
   return (
     <>
     <Router>
           <Switch>
             <ChakraProvider>
-              <PrivateRoute exact path="/" component={Home}/>
               <Route path="/login" component={Login}/>
               <PrivateRoute exact path="/register" component={Register} rolesRestriction={[roles.SuperAdmin]}/>
               <Route path="/requestresetpassword" component={RequestResetPassword}/>
               <Route path="/resetpassword" component={ResetPassword}/>
               <Route path="/confirmemail/:id/:token" component={ConfirmEmail} />
+              <MainLayout>
+                <PrivateRoute exact path="/" component={Home}/>
+                <PrivateRoute exact path="/groups" component={Groups}/>
+              </MainLayout> 
             </ChakraProvider>
           </Switch>
       </Router>
