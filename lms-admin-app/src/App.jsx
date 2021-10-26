@@ -16,6 +16,7 @@ import {roles} from './utils/roles'
 import MainLayout from "./components/layouts/MainLayout/MainLayout";
 import Groups from "./components/pages/Groups/Groups";
 import GroupDetail from "./components/pages/Groups/GroupDetail"
+import EditGroup from "./components/pages/Groups/EditGroup";
 
 function App() {
   
@@ -49,6 +50,7 @@ function App() {
                     <Route path="/admin/groups">
                     <PrivateRoute path="/admin/groups/all" component={Groups} />
                     <PrivateRoute path="/admin/groups/details/:id" component={GroupDetail}/>
+                    <PrivateRoute path="/admin/groups/edit/:id" component={EditGroup} />
                     </Route>
                   <PrivateRoute exact path="/admin/register" component={Register} rolesRestriction={[roles.SuperAdmin]}/>
                 </MainLayout>

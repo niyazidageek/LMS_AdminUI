@@ -21,18 +21,17 @@ const Groups = () => {
 
     const url = process.env.REACT_APP_GET_GROUPS_BY_COUNT_API;
     const history = useHistory();
-    const data = useFetch(url);
+    const [data] = useFetch(url);
 
     function handleView(id) {
         let path = `/admin/groups/details/${id}`;
         history.push(path);
     }
 
+
     return (
-        // <>
         <Box>
             <Flex
-                // overflowX='auto'  
                 display='flex'
                 direction='column'
                 alignItems='center'
@@ -40,7 +39,7 @@ const Groups = () => {
             >
                 <SpinnerComponent />
                 {
-                    (data !== [] || data !== null) ?
+                    (data == {} || data !== null) ?
                         <Box
                             overflowX='auto'
                             width='100%'
@@ -102,7 +101,6 @@ const Groups = () => {
                 }
             </Flex>
         </Box>
-        // </>
     );
 }
 
