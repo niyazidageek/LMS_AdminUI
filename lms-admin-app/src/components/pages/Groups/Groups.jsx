@@ -28,6 +28,11 @@ const Groups = () => {
         history.push(path);
     }
 
+    function handleEdit(id){
+        let path=`/admin/groups/edit/${id}`
+        history.push(path);
+    }
+
 
     return (
         <Box>
@@ -74,7 +79,9 @@ const Groups = () => {
                                                     <Td>{startDate}</Td>
                                                     <Td>{endDate}</Td>
                                                     <Td>
-                                                        <Button colorScheme='yellow'>
+                                                        <Button 
+                                                            colorScheme='yellow'
+                                                            onClick={()=>handleEdit(id)}>
                                                             Edit
                                                         </Button>
                                                     </Td>

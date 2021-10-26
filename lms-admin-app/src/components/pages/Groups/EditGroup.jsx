@@ -32,12 +32,41 @@ import editGroupSchema from '../../../validations/editGroupSchema';
 const EditGroup = () => {
     let { id } = useParams();
     const dispatch = useDispatch();
+    const token = useSelector(state => state.authReducer.jwt)
     const isFetching = useSelector(state=>state.authReducer.isFetching)
     const [dataDb, setDataDb] = useState(null);
     function handleSubmit(values) {
-        // dispatch(authCreator.signIn(values));
-        // console.log(values)
-        console.log(values);
+        let {name,subjectId,startDate,endDate,studentIds} = values;
+        startDate = new Date(startDate).toISOString();
+        endDate = new Date(endDate).toISOString();
+        dispatch(authCreator.setIsFetching());
+        axios({
+            method: 'put',
+            url: process.env.REACT_APP_EDIT_GROUP_API+id,
+            headers:{"Authorization":`Bearer ${token}`},
+            data: {
+                name:name,
+                subject:{
+                    id:subjectId
+                },
+                startDate:startDate,
+                endDate:endDate,
+                appUsers:studentIds
+            }
+        })
+        .then(response=>{
+            dispatch(authCreator.setAuthMessage(response.data.message))
+            dispatch(authCreator.disableIsFetching())
+        })
+        .catch(error=>{
+            if(error.message == "Network Error" || error.message == "Request failed with status code 401"){
+                dispatch(authCreator.setAuthError(error.message))
+            }
+            else{
+                dispatch(authCreator.setAuthError(error.message))
+            }
+            dispatch(authCreator.disableIsFetching())
+        })
     }
 
     useEffect(()=>{
@@ -98,10 +127,10 @@ const EditGroup = () => {
                             subjectId:dataDb.group.subject.id,
                             startDate: dataDb.group.startDate.slice(0, 10),
                             endDate: dataDb.group.endDate.slice(0, 10),
-                            studentIds:[]
+                            studentIds:dataDb.group.appUsers.map(st=>({id:st.id}))
                         }
                     }
-                    // validationSchema={editGroupSchema}
+                    validationSchema={editGroupSchema}
                     onSubmit={handleSubmit}
                     >
                     <Form>
@@ -170,7 +199,7 @@ const EditGroup = () => {
                                         isMulti
                                         name="studentIds"
                                         onChange={option=>{
-                                            form.setFieldValue(field.name, option.map(opt=>(opt.value)));
+                                            form.setFieldValue(field.name, option.map(opt=>({id:opt.value})));
                                         }}
                                         defaultValue={dataDb.group.appUsers.map(a=>({label:`${a.name} ${a.surname}`, value:a.id}))}
                                         options={dataDb.allStudents.map(a=>({label:`${a.name} ${a.surname}`, value:a.id}))}

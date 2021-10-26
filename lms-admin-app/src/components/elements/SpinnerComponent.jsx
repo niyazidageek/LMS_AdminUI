@@ -16,6 +16,7 @@ const SpinnerComponent = React.memo(()=> {
             emptyColor="gray.200"
             color="blue.500"
             size="xl"
+            pos='absolute'
             /> : null
         }
         

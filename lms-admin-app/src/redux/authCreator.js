@@ -273,6 +273,7 @@ export const authCreator = {
     signUp,
     setAuthError,
     disableAuthError,
+    setAuthMessage,
     requestResetPassword,
     resetPassword,
     disableAuthMessage,
