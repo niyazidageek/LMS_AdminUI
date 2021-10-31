@@ -22,9 +22,10 @@ import {
     Text,
 } from "@chakra-ui/react"
 import { AuthErrorAlert } from '../../alerts/AuthErrorAlert';
-import { actionTypes } from '../../../redux/actionTypes';
+import { actionTypes } from '../../../actions/const';
 import { AuthMessageAlert } from '../../alerts/AuthMessageAlert';
 import { useValidateToken } from '../../../hooks/useValidateToken';
+import { resetPasswordAction } from '../../../actions/authActions';
 
 
 const ResetPassword = () => {
@@ -33,8 +34,8 @@ const ResetPassword = () => {
     const dispatch = useDispatch();
     const isFetching = useSelector(state=>state.authReducer.isFetching)
     const [resetDone, setResetDone] = useState(false);
-    async function handleSubmit(values) {
-        await dispatch(authCreator.resetPassword(values));
+    function handleSubmit(values) {
+        dispatch(resetPasswordAction(values));
         setResetDone(true);
     }
 

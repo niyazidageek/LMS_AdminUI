@@ -1,0 +1,199 @@
+
+{({values})=>(
+    <Form>
+    <FieldArray
+      name="files"
+      render={arrayHelpers => (
+        <div>
+          {values.files && values.files.length > 0 ? (
+            values.files.map((file, index) => (
+              <div key={index}>
+                <Field type="file" name={`files.${index}`} 
+                />
+                <button
+                  type="button"
+                  onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                >
+                  -
+                </button>
+                <button
+                  type="button"
+                  onClick={() => arrayHelpers.insert(index)} // insert an empty string at a position
+                >
+                  +
+                </button>
+              </div>
+            ))
+          ) : (
+            <button type="button" onClick={() => arrayHelpers.unshift("")}>
+              {/* show this when user has removed all friends from the list */}
+              Add a friend
+            </button>
+          )}
+          <div>
+            <button type="submit">Submit</button>
+          </div>
+        </div>
+      )}
+    />
+  </Form>
+)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState } from 'react';
+
+function App() {
+  const [inputList, setInputList] = useState([{}]);
+  let reader = new FileReader();
+  // handle input change
+  const handleInputChange = (e, index) => {
+    const file = e.target.files[0];
+    reader.readAsDataURL(file);
+    const list = [...inputList];
+    setInputList(list);
+  };
+
+  // handle click event of the Remove button
+  const handleRemoveClick = (index) => {
+    const list = [...inputList];
+    list.splice(index, 1);
+    setInputList(list);
+  };
+
+  // handle click event of the Add button
+  const handleAddClick = () => {
+    setInputList([...inputList, {}]);
+  };
+
+  return (
+    <div className="App">
+      <h3>
+        <a href="https://cluemediator.com">Clue Mediator</a>
+      </h3>
+      {inputList.map((x, i) => {
+        return (
+          <div className="box">
+            <input
+              name="file"
+              type="file"
+              placeholder="FIle"
+              onChange={(e) => handleInputChange(e, i)}
+            />
+            <div className="btn-box">
+              {inputList.length !== 1 && (
+                <button className="mr10" onClick={() => handleRemoveClick(i)}>
+                  Remove
+                </button>
+              )}
+              {inputList.length - 1 === i && (
+                <button onClick={handleAddClick}>Add</button>
+              )}
+            </div>
+          </div>
+        );
+      })}
+      <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+list[index] = file;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState, useEffect } from 'react';
+
+function App() {
+  const [inputList, setInputList] = useState([{}]);
+  let reader = new FileReader();
+  // handle input change
+  const handleInputChange = (e, index) => {
+    const file = e.target.files[0];
+    reader.readAsDataURL(file);
+    const list = [...inputList];
+    list[index] = file;
+    setInputList(list);
+  };
+
+  useEffect(() => {
+    console.log(inputList);
+  });
+
+  // handle click event of the Remove button
+  const handleRemoveClick = (index) => {
+    const list = [...inputList];
+    list.splice(index, 1);
+    setInputList(list);
+  };
+
+  // handle click event of the Add button
+  const handleAddClick = () => {
+    setInputList([...inputList, {}]);
+  };
+
+  return (
+    <div className="App">
+      <h3>
+        <a href="https://cluemediator.com">Clue Mediator</a>
+      </h3>
+      {inputList.map((x, i) => {
+        return (
+          <div className="box">
+            <input
+              name="file"
+              type="file"
+              placeholder="FIle"
+              onChange={(e) => handleInputChange(e, i)}
+            />
+            <div className="btn-box">
+              {inputList.length !== 1 && (
+                <button className="mr10" onClick={() => handleRemoveClick(i)}>
+                  Remove
+                </button>
+              )}
+              {inputList.length - 1 === i && (
+                <button onClick={handleAddClick}>Add</button>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+export default App;

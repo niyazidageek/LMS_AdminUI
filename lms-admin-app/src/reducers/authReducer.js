@@ -1,4 +1,4 @@
-import { actionTypes } from "./actionTypes"
+import { actionTypes } from "../actions/const"
 
 const initialState = {
     profileName: null,
@@ -16,23 +16,24 @@ const initialState = {
     roles:[]
 }
 
+
 const authReducer = ( state = initialState, action) =>{ 
     switch (action.type) {
         case actionTypes.SET_USER:
             console.log(action);
             return {
                 ...state,
-                profileName: action.payload.profileName,
+                profileName: action.payload.username,
                 email: action.payload.email,
                 name: action.payload.name,
                 surname: action.payload.surname,
                 isLoggedIn: true,
                 isFetching: false,
-                jwt: action.payload.jwt,
+                jwt: action.payload.token,
                 error: null,
                 roles: action.payload.roles,
                 message:null,
-                jwtExpiryDate:action.payload.jwtExpiryDate,
+                jwtExpiryDate:action.payload.expiryDate,
                 rememberMe:action.payload.rememberMe
             }
         case actionTypes.LOG_OUT:
@@ -40,8 +41,8 @@ const authReducer = ( state = initialState, action) =>{
         case actionTypes.SIGN_IN:
             return {
                 ...state,
-                isFetching: true,
-                error: null
+                // isFetching: true,
+                // error: null
             }
         case actionTypes.SEND_CONFIRM_EMAIL:
             return{
@@ -80,7 +81,7 @@ const authReducer = ( state = initialState, action) =>{
             return {
                 ...state,
                 error:null,
-                isFetching: true    
+                // isFetching: true    
             }
         case actionTypes.SIGN_UP_COMPLETE:
             return {
@@ -111,31 +112,27 @@ const authReducer = ( state = initialState, action) =>{
         case actionTypes.SIGN_IN_COMPLETE:
             return {
                 ...state,
-                isFetching: false,
-                error: null
+                // isFetching: false,
+                // error: null
             }
         case actionTypes.SET_AUTH_ERROR:
             return {
                 ...state,
-                isFetching: false,
-                error: action.payload.error
+                error: action.payload.message
             }
         case actionTypes.DISABLE_AUTH_ERROR:
             return{
                 ...state,
-                isFetching:false,
                 error:null
             }
         case actionTypes.SET_AUTH_MESSAGE:
             return {
                 ...state,
-                isFetching: false,
                 message: action.payload.message
             }
         case actionTypes.DISABLE_AUTH_MESSAGE:
             return{
                 ...state,
-                isFetching:false,
                 message:null
             }
         

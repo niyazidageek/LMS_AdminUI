@@ -17,6 +17,7 @@ import MainLayout from "./components/layouts/MainLayout/MainLayout";
 import Groups from "./components/pages/Groups/Groups";
 import GroupDetail from "./components/pages/Groups/GroupDetail"
 import EditGroup from "./components/pages/Groups/EditGroup";
+import testpage from "./components/pages/Login/testpage";
 
 function App() {
   
@@ -41,6 +42,7 @@ function App() {
               }} 
               />
               <Route path="/login" component={Login}/>
+              <Route path="/test" component={testpage}/>
               <Route path="/requestresetpassword" component={RequestResetPassword}/>
               <Route path="/resetpassword" component={ResetPassword}/>
               <Route path="/confirmemail/:id/:token" component={ConfirmEmail} />

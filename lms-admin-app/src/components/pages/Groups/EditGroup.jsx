@@ -25,7 +25,6 @@ import { AuthErrorAlert } from '../../alerts/AuthErrorAlert';
 import { AuthMessageAlert } from '../../alerts/AuthMessageAlert';
 import axios from 'axios';
 import SpinnerComponent from '../../elements/SpinnerComponent';
-import {parseISOString} from '../../../utils/parseISOString'
 import editGroupSchema from '../../../validations/editGroupSchema';
 
 
@@ -203,7 +202,7 @@ const EditGroup = () => {
                                         }}
                                         defaultValue={dataDb.group.appUsers.map(a=>({label:`${a.name} ${a.surname}`, value:a.id}))}
                                         options={dataDb.allStudents.map(a=>({label:`${a.name} ${a.surname}`, value:a.id}))}
-                                        placeholder="Select roles"
+                                        placeholder="Select students"
                                         closeMenuOnSelect={false}
                                         />
                                         <FormErrorMessage>{form.errors.studentIds}</FormErrorMessage>

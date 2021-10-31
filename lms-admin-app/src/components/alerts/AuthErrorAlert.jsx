@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     useToast,
 } from "@chakra-ui/react"
-import {authCreator} from '../../redux/authCreator'
+import { actionTypes } from "../../actions/const";
 
 export const AuthErrorAlert = React.memo(()=>{
     const error = useSelector(state => state.authReducer.error)
@@ -16,7 +16,9 @@ export const AuthErrorAlert = React.memo(()=>{
         toast({ status: "error",description: error, position:'top' ,duration:2000 })
         console.log('alert')
 
-        dispatch(authCreator.disableAuthError());
+        dispatch({
+            type:actionTypes.DISABLE_AUTH_ERROR
+        });
     }
 
     return(
