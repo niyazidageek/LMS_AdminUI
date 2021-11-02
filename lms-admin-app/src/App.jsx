@@ -13,10 +13,12 @@ import ConfirmEmail from "./components/pages/EmailConfirmation/ConfirmEmail";
 import { useValidateToken } from "./hooks/useValidateToken";
 import {roles} from './utils/roles'
 import MainLayout from "./components/layouts/MainLayout/MainLayout";
-import Groups from "./components/pages/Groups/Groups";
-import GroupDetail from "./components/pages/Groups/GroupDetail"
-import EditGroup from "./components/pages/Groups/EditGroup";
+import Groups from "./components/pages/Group/Groups";
+import GroupDetail from "./components/pages/Group/GroupDetail"
+import EditGroup from "./components/pages/Group/EditGroup";
 import testpage from "./components/pages/Login/testpage";
+import Subjects from "./components/pages/Subject/Subjects";
+import EditSubject from "./components/pages/Subject/EditSubject";
 
 function App() {
   
@@ -41,7 +43,6 @@ function App() {
               }} 
               />
               <Route path="/login" component={Login}/>
-              <Route path="/test" component={testpage}/>
               <Route path="/requestresetpassword" component={RequestResetPassword}/>
               <Route path="/resetpassword" component={ResetPassword}/>
               <Route path="/confirmemail/:id/:token" component={ConfirmEmail} />
@@ -52,6 +53,10 @@ function App() {
                     <PrivateRoute path="/admin/groups/all" component={Groups} />
                     <PrivateRoute path="/admin/groups/details/:id" component={GroupDetail}/>
                     <PrivateRoute path="/admin/groups/edit/:id" component={EditGroup} />
+                    </Route>
+                    <Route path="/admin/subjects">
+                    <PrivateRoute path="/admin/subjects/all" component={Subjects} />
+                    <PrivateRoute path="/admin/subjects/edit/:id" component={EditSubject} />
                     </Route>
                   <PrivateRoute exact path="/admin/register" component={Register} rolesRestriction={[roles.SuperAdmin]}/>
                 </MainLayout>

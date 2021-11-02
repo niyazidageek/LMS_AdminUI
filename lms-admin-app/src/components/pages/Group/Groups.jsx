@@ -84,15 +84,15 @@ const Groups = () => {
               <Table variant="simple" colorScheme="blackAlpha">
                 <Thead>
                   <Tr>
-                    <Th>Id</Th>
-                    <Th>Name</Th>
-                    <Th>Number of participants</Th>
-                    <Th>Subject</Th>
-                    <Th>Start date</Th>
-                    <Th>End date</Th>
-                    <Th>Edit</Th>
-                    <Th>Delete</Th>
-                    <Th>View</Th>
+                    <Th textAlign="center">Id</Th>
+                    <Th textAlign="center">Name</Th>
+                    <Th textAlign="center">Number of participants</Th>
+                    <Th textAlign="center">Subject</Th>
+                    <Th textAlign="center">Start date</Th>
+                    <Th textAlign="center">End date</Th>
+                    <Th textAlign="center">Edit</Th>
+                    <Th textAlign="center">Delete</Th>
+                    <Th textAlign="center">View</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -102,13 +102,13 @@ const Groups = () => {
                     let endDate = normalizedDate(gr.endDate);
                     return (
                       <Tr key={index}>
-                        <Th>{id}</Th>
-                        <Td>{name}</Td>
-                        <Td>{appUsersCount}</Td>
-                        <Td>{subject.name}</Td>
-                        <Td>{startDate}</Td>
-                        <Td>{endDate}</Td>
-                        <Td>
+                        <Th textAlign="center">{id}</Th>
+                        <Td textAlign="center">{name}</Td>
+                        <Td textAlign="center">{appUsersCount}</Td>
+                        <Td textAlign="center">{subject.name}</Td>
+                        <Td textAlign="center">{startDate}</Td>
+                        <Td textAlign="center">{endDate}</Td>
+                        <Td textAlign="center">
                           <Button
                             colorScheme="yellow"
                             onClick={() => handleEdit(id)}
@@ -116,10 +116,10 @@ const Groups = () => {
                             Edit
                           </Button>
                         </Td>
-                        <Td>
+                        <Td textAlign="center">
                           <Button colorScheme="pink">Delete</Button>
                         </Td>
-                        <Td>
+                        <Td textAlign="center">
                           <Button
                             colorScheme="telegram"
                             onClick={() => handleView(id)}

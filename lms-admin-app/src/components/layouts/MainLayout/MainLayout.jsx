@@ -32,6 +32,8 @@ import {
   FiMenu,
   FiBell,
   FiChevronDown,
+  FiBook,
+  FiUsers,
 } from "react-icons/fi";
 import { GrGroup } from "react-icons/gr";
 import { useSelector } from "react-redux";
@@ -42,8 +44,8 @@ import { AuthMessageAlert } from "../../alerts/AuthMessageAlert";
 
 const LinkItems = [
   { name: "Home", icon: FiHome, path: "/admin/home" },
-  { name: "Groups", icon: GrGroup, path: "/admin/groups/all" },
-  { name: "Explore", icon: FiCompass, path: "/" },
+  { name: "Groups", icon: FiUsers, path: "/admin/groups/all" },
+  { name: "Subjects", icon: FiBook, path: "/admin/subjects/all" },
   { name: "Favourites", icon: FiStar, path: "/" },
   { name: "Settings", icon: FiSettings, path: "/" },
 ];
