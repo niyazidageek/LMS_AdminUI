@@ -60,7 +60,7 @@ const CreateGroupModal = ({ onClick, value, subjects, students }) => {
 
           <Formik
             initialValues={{
-              name: "",
+              name: '',
               subjectId: '',
               startDate: '',
               endDate: '',

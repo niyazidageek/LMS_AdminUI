@@ -4,7 +4,7 @@ const api = Axios.create({
     baseURL:process.env.REACT_APP_API,
     headers:{
         Accept:'application/json',
-        'Content-Type':'application/json'
+        'Content-Type':'application/json, multipart/form-data'
     }
 })
 

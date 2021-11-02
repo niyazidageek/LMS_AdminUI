@@ -19,6 +19,9 @@ import EditGroup from "./components/pages/Group/EditGroup";
 import testpage from "./components/pages/Login/testpage";
 import Subjects from "./components/pages/Subject/Subjects";
 import EditSubject from "./components/pages/Subject/EditSubject";
+import Lessons from "./components/pages/Lesson/Lessons";
+import LessonDetail from "./components/pages/Lesson/LessonDetail"
+import EditLesson from "./components/pages/Lesson/EditLesson"
 
 function App() {
   
@@ -57,6 +60,11 @@ function App() {
                     <Route path="/admin/subjects">
                     <PrivateRoute path="/admin/subjects/all" component={Subjects} />
                     <PrivateRoute path="/admin/subjects/edit/:id" component={EditSubject} />
+                    </Route>
+                    <Route path="/admin/lessons">
+                    <PrivateRoute path="/admin/lessons/all" component={Lessons} />
+                    <PrivateRoute path="/admin/lessons/details/:id" component={LessonDetail}/>
+                    <PrivateRoute path="/admin/lessons/edit/:id" component={EditLesson} />
                     </Route>
                   <PrivateRoute exact path="/admin/register" component={Register} rolesRestriction={[roles.SuperAdmin]}/>
                 </MainLayout>

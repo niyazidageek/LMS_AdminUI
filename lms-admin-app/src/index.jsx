@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import { store } from "./store/store.js";
-import { persistor } from "./store/store";
+import { store } from "./store";
+import { persistor } from "./store";
 
 ReactDOM.render(
   <React.StrictMode>
