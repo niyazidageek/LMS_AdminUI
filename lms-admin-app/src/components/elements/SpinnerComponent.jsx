@@ -4,12 +4,9 @@ import { useSelector } from 'react-redux';
 
 const SpinnerComponent = React.memo(()=> {
 
-    const isFetching = useSelector(state => state.authReducer.isFetching);
-
     return (
         <>
         {
-            isFetching ? 
             <Spinner
             thickness="4px"
             speed="0.65s"
@@ -17,7 +14,7 @@ const SpinnerComponent = React.memo(()=> {
             color="blue.500"
             size="xl"
             pos='absolute'
-            /> : null
+            />
         }
         
         </>

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import axios from 'axios'
 import { useSelector, useDispatch } from "react-redux";
-import { authCreator } from "./redux/authCreator";
 import { BrowserRouter as Router, Switch, Redirect, Route } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import {PrivateRoute} from "./utils/PrivateRoute";

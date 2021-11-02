@@ -2,7 +2,6 @@ import React,{useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { useHistory } from 'react-router';
-import {authCreator} from '../../../redux/authCreator'
 import resetPasswordSchema from '../../../validations/resetPasswordSchema';
 import { NavLink, Redirect } from 'react-router-dom';
 import validateEmail from '../../../validations/validateEmail';

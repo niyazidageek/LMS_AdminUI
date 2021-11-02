@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
-import {authCreator} from '../../../redux/authCreator'
 import requestResetPasswordSchema from '../../../validations/requestResetPasswordSchema';
 import { Redirect } from 'react-router-dom';
 import validateEmail from '../../../validations/validateEmail';

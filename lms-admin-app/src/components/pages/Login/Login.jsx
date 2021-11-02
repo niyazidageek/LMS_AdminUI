@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
-import {authCreator} from '../../../redux/authCreator'
 import signInSchema from '../../../validations/signInSchema';
 import { NavLink, Redirect } from 'react-router-dom';
 import validateEmail from '../../../validations/validateEmail';

@@ -1,32 +1,41 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { authCreator } from "../redux/authCreator";
+import { useDispatch, useSelector } from "react-redux";
+import { actionTypes } from "../actions/const";
+import { httpClient } from "../utils/httpClient";
 
-export function useFetch(url){
+export function useFetch(callback) {
+  const dispatch = useDispatch();
+  const [data, setData] = useState(null);
 
-    const dispatch = useDispatch();
-    const [data, setData] = useState(null);
-    
-    useEffect(()=>{
-        dispatch(authCreator.setIsFetching());
-        console.log('rendering');
-            axios.get(url)
-            .then(response=>{
-                setData(response.data);
-                dispatch(authCreator.disableIsFetching());
-            })
-            .catch(error=>{
-                if(error.message == "Network Error" || error.message == "Request failed with status code 401"){
-                    dispatch(authCreator.setAuthError(error.message));
-                    dispatch(authCreator.disableIsFetching());
-                }
-                else{
-                    console.log(error)
-                    dispatch(authCreator.setAuthError(error.response.data.message))
-                    dispatch(authCreator.disableIsFetching());
-                }
-            })
-    },[url]);
-    return [data];
+  useEffect(() => {
+    dispatch({
+      type: actionTypes.SET_IS_FETCHING,
+    });
+    callback
+      .then((res) => {
+        setData(res.data);
+        dispatch({
+          type: actionTypes.DISABLE_IS_FETCHING,
+        });
+      })
+      .catch((error) => {
+        if (error.message === "Network Error") {
+          dispatch({
+            type: actionTypes.SET_AUTH_ERROR,
+            payload: error,
+          });
+        } else {
+          dispatch({
+            type: actionTypes.SET_AUTH_ERROR,
+            payload: error.response.data,
+          });
+        }
+        dispatch({
+          type: actionTypes.DISABLE_IS_FETCHING,
+        });
+      });
+  }, []);
+
+  return data;
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
-import { authCreator } from '../../../redux/authCreator'
 import signUpSchema from '../../../validations/signUpSchema';
 import { Redirect } from 'react-router-dom';
 import validateEmail from '../../../validations/validateEmail';
@@ -31,6 +30,7 @@ import {
 } from "@chakra-ui/react"
 import { AuthErrorAlert } from '../../alerts/AuthErrorAlert';
 import {userRoles} from '../../../utils/roles';
+import { signUpAction } from '../../../actions/authActions';
 
 
 const Register = () => {
@@ -43,7 +43,7 @@ const Register = () => {
 
     function handleSubmit(values) { 
 
-        dispatch(authCreator.signUp(values,token));
+        dispatch(signUpAction(values, token));
 
     }
 
