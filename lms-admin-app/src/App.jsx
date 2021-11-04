@@ -30,6 +30,8 @@ import Quizzes from "./components/pages/Quiz/Quizzes";
 import EditQuiz from "./components/pages/Quiz/EditQuiz";
 import QuizDetail from "./components/pages/Quiz/QuizDetail";
 import Questions from "./components/pages/Question/Questions";
+import EditQuestion from "./components/pages/Question/EditQuestion";
+import QuestionDetail from "./components/pages/Question/QuestionDetail";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
@@ -114,11 +116,11 @@ function App() {
                   <PrivateRoute path="/admin/questions/all" component={Questions} />
                   <PrivateRoute
                     path="/admin/questions/details/:id"
-                    component={QuizDetail}
+                    component={QuestionDetail}
                   />
                   <PrivateRoute
                     path="/admin/questions/edit/:id"
-                    component={EditQuiz}
+                    component={EditQuestion}
                   />
                 </Route>
                 <PrivateRoute

@@ -38,18 +38,16 @@ const CreateQuestionModal = ({ onClick, value, quizzes }) => {
   const fileRef = useRef(undefined);
   function handleSubmit(values) {
     var formData = new FormData();
-    let { file, name, quizId, point,fileNames } = values;
+    let { file, name, quizId, point,fileName } = values;
     let data = {
       name,
       quizId,
-      fileNames, 
+      fileName, 
       point
     };
     formData.append("Values", JSON.stringify(data));
 
     file && formData.append("QuestionFile", file);
-    
-      
 
     dispatch(createQuestionAction(formData, token));
     onClick();
@@ -139,8 +137,8 @@ const CreateQuestionModal = ({ onClick, value, quizzes }) => {
                     </Field>
                   </FormControl>
 
-                  <FormControl id="files">
-                    <Field name="files">
+                  <FormControl id="file">
+                    <Field name="file">
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.name && form.touched.name}
