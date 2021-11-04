@@ -25,6 +25,8 @@ const GET_GROUPS = "GET_GROUPS";
 const GET_SUBJECT_BY_ID = "GET_SUBJECT_BY_ID";
 const GET_LESSONS = "GET_LESSONS";
 const GET_LESSON_BY_ID = "GET_LESSON_BY_ID"
+const GET_QUIZZES = "GET_QUIZZES"
+const GET_QUIZ_BY_ID = "GET_QUIZ_BY_ID"
 
 export const actionTypes = {
   SET_USER,
@@ -53,5 +55,7 @@ export const actionTypes = {
   GET_GROUPS,
   GET_SUBJECT_BY_ID,
   GET_LESSONS,
-  GET_LESSON_BY_ID
+  GET_LESSON_BY_ID,
+  GET_QUIZZES,
+  GET_QUIZ_BY_ID
 };

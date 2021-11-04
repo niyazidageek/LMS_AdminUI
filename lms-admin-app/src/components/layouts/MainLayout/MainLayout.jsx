@@ -36,6 +36,7 @@ import {
   FiUsers,
   FiPenTool,
   FiEdit2,
+  FiFileText,
 } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { AuthErrorAlert } from "../../alerts/AuthErrorAlert";
@@ -46,7 +47,7 @@ const LinkItems = [
   { name: "Groups", icon: FiUsers, path: "/admin/groups/all" },
   { name: "Subjects", icon: FiBook, path: "/admin/subjects/all" },
   { name: "Lessons", icon: FiEdit2, path: "/admin/lessons/all" },
-  { name: "Settings", icon: FiSettings, path: "/" },
+  { name: "Quizzes", icon: FiFileText, path: "/admin/quizzes/all" },
 ];
 
 export default function MainLayout({ children }) {

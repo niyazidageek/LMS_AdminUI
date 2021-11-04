@@ -6,7 +6,8 @@ import authReducer from "../reducers/authReducer";
 import subjectReducer from "./subjectReducer";
 import studentReducer from "./studentReducer";
 import groupReducer from "./groupReducer";
-import lessonReducer from "./lessonReducer"
+import lessonReducer from "./lessonReducer";
+import quizReducer from "./quizReducer";
 
 const persistConfig = {
   key: "root",
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   subjectReducer,
   studentReducer,
   groupReducer,
-  lessonReducer
+  lessonReducer,
+  quizReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
