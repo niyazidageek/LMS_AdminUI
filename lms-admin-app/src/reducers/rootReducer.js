@@ -8,6 +8,7 @@ import studentReducer from "./studentReducer";
 import groupReducer from "./groupReducer";
 import lessonReducer from "./lessonReducer";
 import quizReducer from "./quizReducer";
+import questionReducer from "./questionReducer"
 
 const persistConfig = {
   key: "root",
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   groupReducer,
   lessonReducer,
   quizReducer,
+  questionReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

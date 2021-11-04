@@ -9,20 +9,13 @@ import {
   FormErrorMessage,
   Flex,
   Box,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
   Input,
-  Checkbox,
   Stack,
-  Link,
   Button,
   Heading,
-  Text,
 } from "@chakra-ui/react";
 import { AuthErrorAlert } from "../../alerts/AuthErrorAlert";
 import { AuthMessageAlert } from "../../alerts/AuthMessageAlert";
-import axios from "axios";
 import SpinnerComponent from "../../elements/SpinnerComponent";
 import groupSchema from "../../../validations/groupSchema";
 import { getSubjectsAction } from "../../../actions/subjectActions";
@@ -31,19 +24,14 @@ import {
   updateGroupAction,
 } from "../../../actions/groupActions";
 import { getStudentsAction } from "../../../actions/studentActions";
-import { getGroupById, updateGroup } from "../../../services/groupService";
-import { getSubjects } from "../../../services/subjectService";
-import { getStudents } from "../../../services/studentService";
-import { actionTypes } from "../../../actions/const";
-import { useFetch } from "../../../hooks/useFetch";
 
 const EditGroup = () => {
   let { id } = useParams();
   const dispatch = useDispatch();
 
-  const group = useSelector(state=>state.groupReducer.group)
-  const subjects = useSelector(state=>state.subjectReducer.subjects)
-  const students = useSelector(state=>state.studentReducer.students)
+  const group = useSelector((state) => state.groupReducer.group);
+  const subjects = useSelector((state) => state.subjectReducer.subjects);
+  const students = useSelector((state) => state.studentReducer.students);
 
   const token = useSelector((state) => state.authReducer.jwt);
   const isFetching = useSelector((state) => state.authReducer.isFetching);
@@ -60,15 +48,14 @@ const EditGroup = () => {
       appUsers: studentIds,
     };
 
-    dispatch(updateGroupAction(data, id, token))
-   
+    dispatch(updateGroupAction(data, id, token));
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getGroupByIdAction(id));
     dispatch(getSubjectsAction());
     dispatch(getStudentsAction());
-  },[])
+  }, []);
 
   return (
     <>
@@ -81,10 +68,11 @@ const EditGroup = () => {
           alignItems="center"
           pos="relative"
         >
-          {
-          isFetching||!group||!students||!subjects ? <SpinnerComponent /> : (
+          {isFetching || !group || !students || !subjects ? (
+            <SpinnerComponent />
+          ) : (
             <Flex align={"center"} justify={"center"}>
-            <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+              <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
                 <Stack align={"center"}>
                   <Heading fontSize={"4xl"}>Edit group</Heading>
                 </Stack>
@@ -263,10 +251,8 @@ const EditGroup = () => {
                   </Formik>
                 </Box>
               </Stack>
-          </Flex>
-          )
-          }
-          
+            </Flex>
+          )}
         </Flex>
       </Box>
     </>

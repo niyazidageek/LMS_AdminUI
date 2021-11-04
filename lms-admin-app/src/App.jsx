@@ -21,7 +21,6 @@ import MainLayout from "./components/layouts/MainLayout/MainLayout";
 import Groups from "./components/pages/Group/Groups";
 import GroupDetail from "./components/pages/Group/GroupDetail";
 import EditGroup from "./components/pages/Group/EditGroup";
-import testpage from "./components/pages/Login/testpage";
 import Subjects from "./components/pages/Subject/Subjects";
 import EditSubject from "./components/pages/Subject/EditSubject";
 import Lessons from "./components/pages/Lesson/Lessons";
@@ -30,6 +29,7 @@ import EditLesson from "./components/pages/Lesson/EditLesson";
 import Quizzes from "./components/pages/Quiz/Quizzes";
 import EditQuiz from "./components/pages/Quiz/EditQuiz";
 import QuizDetail from "./components/pages/Quiz/QuizDetail";
+import Questions from "./components/pages/Question/Questions";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
@@ -62,6 +62,7 @@ function App() {
             <Route path="/admin">
               <MainLayout>
                 <PrivateRoute path="/admin/home" component={Home} />
+
                 <Route path="/admin/groups">
                   <PrivateRoute path="/admin/groups/all" component={Groups} />
                   <PrivateRoute
@@ -73,6 +74,7 @@ function App() {
                     component={EditGroup}
                   />
                 </Route>
+
                 <Route path="/admin/subjects">
                   <PrivateRoute
                     path="/admin/subjects/all"
@@ -83,6 +85,7 @@ function App() {
                     component={EditSubject}
                   />
                 </Route>
+
                 <Route path="/admin/lessons">
                   <PrivateRoute path="/admin/lessons/all" component={Lessons} />
                   <PrivateRoute
@@ -94,6 +97,7 @@ function App() {
                     component={EditLesson}
                   />
                 </Route>
+
                 <Route path="/admin/quizzes">
                   <PrivateRoute path="/admin/quizzes/all" component={Quizzes} />
                   <PrivateRoute
@@ -102,6 +106,18 @@ function App() {
                   />
                   <PrivateRoute
                     path="/admin/quizzes/edit/:id"
+                    component={EditQuiz}
+                  />
+                </Route>
+
+                <Route path="/admin/questions">
+                  <PrivateRoute path="/admin/questions/all" component={Questions} />
+                  <PrivateRoute
+                    path="/admin/questions/details/:id"
+                    component={QuizDetail}
+                  />
+                  <PrivateRoute
+                    path="/admin/questions/edit/:id"
                     component={EditQuiz}
                   />
                 </Route>

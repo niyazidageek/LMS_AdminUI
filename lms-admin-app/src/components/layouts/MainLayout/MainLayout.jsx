@@ -32,6 +32,7 @@ import {
   FiMenu,
   FiBell,
   FiChevronDown,
+  FiAlignJustify,
   FiBook,
   FiUsers,
   FiPenTool,
@@ -48,6 +49,9 @@ const LinkItems = [
   { name: "Subjects", icon: FiBook, path: "/admin/subjects/all" },
   { name: "Lessons", icon: FiEdit2, path: "/admin/lessons/all" },
   { name: "Quizzes", icon: FiFileText, path: "/admin/quizzes/all" },
+  { name: "Questions", icon: FiAlignJustify, path: "/admin/questions/all" },
+
+  
 ];
 
 export default function MainLayout({ children }) {

@@ -23,20 +23,8 @@ import {
 } from "@chakra-ui/react";
 import { AuthErrorAlert } from "../../alerts/AuthErrorAlert";
 import { AuthMessageAlert } from "../../alerts/AuthMessageAlert";
-import axios from "axios";
 import SpinnerComponent from "../../elements/SpinnerComponent";
-import groupSchema from "../../../validations/groupSchema";
 import { getSubjectsAction } from "../../../actions/subjectActions";
-import {
-  getGroupByIdAction,
-  updateGroupAction,
-} from "../../../actions/groupActions";
-import { getStudentsAction } from "../../../actions/studentActions";
-import { getGroupById, updateGroup } from "../../../services/groupService";
-import { getSubjects } from "../../../services/subjectService";
-import { getStudents } from "../../../services/studentService";
-import { actionTypes } from "../../../actions/const";
-import { useFetch } from "../../../hooks/useFetch";
 import {
   getQuizByIdAction,
   updateQuizAction,

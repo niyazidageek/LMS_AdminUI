@@ -13,13 +13,10 @@ import {
   Button,
   Box,
 } from "@chakra-ui/react";
-import { useFetch } from "../../../hooks/useFetch";
 import { useHistory } from "react-router";
 import { Flex, Text } from "@chakra-ui/layout";
 import SpinnerComponent from "../../elements/SpinnerComponent";
-import { getGroupById } from "../../../services/groupService";
 import { useDispatch, useSelector } from "react-redux";
-import CreateGroupModal from "./CreateGroupModal";
 import { getGroupByIdAction } from "../../../actions/groupActions";
 
 const GroupDetail = () => {
