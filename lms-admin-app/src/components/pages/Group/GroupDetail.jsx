@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import normalizedDate from "../../../utils/normalizedDate";
+import { dateHelper } from "../../../utils/dateHelper";
 import {
   Table,
   Thead,
@@ -106,7 +106,7 @@ const GroupDetail = () => {
                   fontWeight="semibold"
                   fontStyle="normal"
                 >
-                  Start date : {normalizedDate(group.startDate)}
+                  Start date : {dateHelper.normalizedDate(group.startDate)}
                 </Text>
 
                 <Text
@@ -115,7 +115,7 @@ const GroupDetail = () => {
                   fontWeight="semibold"
                   fontStyle="normal"
                 >
-                  End date : {normalizedDate(group.endDate)}
+                  End date : {dateHelper.normalizedDate(group.endDate)}
                 </Text>
               </Box>
 

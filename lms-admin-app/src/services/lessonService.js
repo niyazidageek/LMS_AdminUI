@@ -1,5 +1,4 @@
 import { httpClient } from "../utils/httpClient";
-import axios from "axios";
 
 export const getLessonById = (id) => {
   return httpClient.get("lesson/getlessonbyid/" + id);
@@ -11,7 +10,10 @@ export const getLessons = () => {
 
 export const updateLesson = (data, id, token) => {
   return httpClient.put("lesson/editlesson/" + id, data, {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { 
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data"
+     },
   });
 };
 

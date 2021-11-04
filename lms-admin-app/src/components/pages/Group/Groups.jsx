@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import SpinnerComponent from "../../elements/SpinnerComponent";
 import { Container, Flex } from "@chakra-ui/layout";
-import normalizedDate from "../../../utils/normalizedDate";
+import { dateHelper } from "../../../utils/dateHelper";
 import {
   Table,
   Thead,
@@ -21,13 +21,9 @@ import {
   getGroupByIdAction,
   getGroupsAction,
 } from "../../../actions/groupActions";
-import { getGroups } from "../../../services/groupService";
-import { actionTypes } from "../../../actions/const";
 import { AuthMessageAlert } from "../../alerts/AuthMessageAlert";
 import { AuthErrorAlert } from "../../alerts/AuthErrorAlert";
 import CreateGroupModal from "./CreateGroupModal";
-import { getStudents } from "../../../services/studentService";
-import { getSubjects } from "../../../services/subjectService";
 import { getSubjectsAction } from "../../../actions/subjectActions";
 import { getStudentsAction } from "../../../actions/studentActions";
 
@@ -98,8 +94,8 @@ const Groups = () => {
                 <Tbody>
                   {groups.map((gr, index) => {
                     const { id, appUsersCount, name, subject } = gr;
-                    let startDate = normalizedDate(gr.startDate);
-                    let endDate = normalizedDate(gr.endDate);
+                    let startDate = dateHelper.normalizedDate(gr.startDate);
+                    let endDate = dateHelper.normalizedDate(gr.endDate);
                     return (
                       <Tr key={index}>
                         <Th textAlign="center">{id}</Th>

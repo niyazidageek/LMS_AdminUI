@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import SpinnerComponent from "../../elements/SpinnerComponent";
 import { Container, Flex } from "@chakra-ui/layout";
-import normalizedDate from "../../../utils/normalizedDate";
+import { dateHelper } from "../../../utils/dateHelper";
 import {
   Table,
   Thead,
@@ -88,8 +88,8 @@ const Lessons = () => {
                 <Tbody>
                   {lessons.map((ls, index, subject) => {
                     const { id, group, name} = ls;
-                    let startDate = normalizedDate(ls.startDate);
-                    let endDate = normalizedDate(ls.endDate);
+                    let startDate = dateHelper.normalizedDate(ls.startDate);
+                    let endDate = dateHelper.normalizedDate(ls.endDate);
                     return (
                       <Tr key={index}>
                         <Th textAlign="center">{id}</Th>
@@ -141,7 +141,7 @@ const Lessons = () => {
             bottom="0"
             margin="1rem"
           >
-            Create group
+            Create lesson
           </Button>
         )}
       </Box>
