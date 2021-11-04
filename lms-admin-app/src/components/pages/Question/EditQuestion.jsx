@@ -29,6 +29,7 @@ import { AuthMessageAlert } from "../../alerts/AuthMessageAlert";
 import SpinnerComponent from "../../elements/SpinnerComponent";
 import { getQuizzesAction } from "../../../actions/quizActions";
 import { getQuestionByIdAction, updateQuestionAction } from "../../../actions/questionActions";
+import { fileHelper } from "../../../utils/fileHelper";
 
 const EditQuestion = () => {
   let { id } = useParams();
@@ -41,21 +42,6 @@ const EditQuestion = () => {
 
   const token = useSelector((state) => state.authReducer.jwt);
   const isFetching = useSelector((state) => state.authReducer.isFetching);
-
-  const qandon = (filename) => {
-    return require(`${process.env.REACT_APP_FILES_FOLDER}${filename}`).default;
-  };
-
-//   async function suka(filename) {
-//     // require(`${process.env.REACT_APP_FILES_FOLDER}${filename}`).default()
-
-//     try {
-//       return await require(`${process.env.REACT_APP_FILES_FOLDER}${filename}`)
-//         .default;
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
 
   function handleSubmit(values) {
     let { name, quizId, fileNames, file, point } = values;
@@ -212,7 +198,7 @@ const EditQuestion = () => {
                                         key={index}
                                         direction="row"
                                       >
-                                        <Link cursor='pointer' href={qandon(file)}>
+                                        <Link cursor='pointer' href={fileHelper.convertToUrl(file)}>
                                           {file}
                                         </Link>
                                         <CloseButton

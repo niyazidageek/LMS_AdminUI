@@ -33,6 +33,7 @@ import {
   updateLessonAction,
 } from "../../../actions/lessonActions";
 import { actionTypes } from "../../../actions/const";
+import { fileHelper } from "../../../utils/fileHelper";
 
 const EditLesson = () => {
   let { id } = useParams();
@@ -45,22 +46,7 @@ const EditLesson = () => {
   const groups = useSelector((state) => state.groupReducer.groups);
 
   const token = useSelector((state) => state.authReducer.jwt);
-  const isFetching = useSelector((state) => state.authReducer.isFetching);
-
-  const qandon = (filename) => {
-    return require(`${process.env.REACT_APP_FILES_FOLDER}${filename}`).default;
-  };
-
-  async function suka(filename) {
-    // require(`${process.env.REACT_APP_FILES_FOLDER}${filename}`).default()
-
-    try {
-      return await require(`${process.env.REACT_APP_FILES_FOLDER}${filename}`)
-        .default;
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const isFetching = useSelector((state) => state.authReducer.isFetching);  
 
   function handleSubmit(values) {
     let { name, groupId, startDate, endDate, fileNames, files } = values;
@@ -241,7 +227,7 @@ const EditLesson = () => {
                                         key={index}
                                         direction="row"
                                       >
-                                        <Link cursor='pointer' href={qandon(file.fileName)}>
+                                        <Link cursor='pointer' href={fileHelper.convertToUrl(file.fileName)}>
                                           {file.fileName}
                                         </Link>
                                         <CloseButton

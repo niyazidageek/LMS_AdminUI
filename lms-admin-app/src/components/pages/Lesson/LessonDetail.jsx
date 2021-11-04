@@ -24,6 +24,7 @@ import SpinnerComponent from "../../elements/SpinnerComponent";
 import { getGroupById } from "../../../services/groupService";
 import { useDispatch, useSelector } from "react-redux";
 import { getLessonByIdAction } from "../../../actions/lessonActions";
+import { fileHelper } from "../../../utils/fileHelper";
 
 const LessonDetail = () => {
   let { id } = useParams();
@@ -139,7 +140,7 @@ const LessonDetail = () => {
                                         key={index}
                                         direction="row"
                                       >
-                                        <Link cursor='pointer'  href={require(`${process.env.REACT_APP_FILES_FOLDER}${lm.fileName}`).default}>
+                                        <Link cursor='pointer'  href={fileHelper.convertToUrl(lm.fileName)}>
                                        {lm.fileName}
                                        </Link>
 
