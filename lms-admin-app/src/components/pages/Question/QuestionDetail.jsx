@@ -70,6 +70,7 @@ const QuestionDetail = () => {
                   fontStyle="normal"
                 >
                   Name : {question.name}
+                  sa
                 </Text>
 
                 <Text
