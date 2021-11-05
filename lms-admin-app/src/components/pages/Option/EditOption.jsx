@@ -32,7 +32,7 @@ import SpinnerComponent from "../../elements/SpinnerComponent";
 import { getQuizzesAction } from "../../../actions/quizActions";
 import { getQuestionByIdAction, getQuestionsAction, updateQuestionAction } from "../../../actions/questionActions";
 import { fileHelper } from "../../../utils/fileHelper";
-import { getOptionByIdAction } from "../../../actions/optionActions";
+import { getOptionByIdAction, updateOptionAction } from "../../../actions/optionActions";
 
 const EditOption = () => {
   let { id } = useParams();
@@ -54,14 +54,14 @@ const EditOption = () => {
       name,
       questionId,
       fileName,
-      isCorrect
+      isCorrect: isCorrect == '1' ? true : false
     };
 
     formData.append("Values", JSON.stringify(data));
 
     file && formData.append("OptionFile", file);
 
-    dispatch(updateQuestionAction(formData, id, token));
+    dispatch(updateOptionAction(formData, id, token));
 
   }
 
@@ -71,6 +71,7 @@ const EditOption = () => {
   }, []);
 
   return (
+    console.log(option),
     <>
       <AuthErrorAlert />
       <AuthMessageAlert />
@@ -99,8 +100,8 @@ const EditOption = () => {
                   <Formik
                     initialValues={{
                       name: option.name,
-                      quizId: option.question.id,
-                      isCorrect:option.isCorrect,
+                      questionId: option.question.id,
+                      isCorrect:option.isCorrect ? '1' : '0',
                       fileNames: (option.fileName && [option.fileName]) ?? null,
                       file: null,
                     }}
@@ -163,7 +164,7 @@ const EditOption = () => {
                         </FormControl>
 
                         <FormControl id="isCorrect">
-                          <Field name="point">
+                          <Field name="isCorrect">
                             {({ field, form }) => (
                               <FormControl
                                 isInvalid={
@@ -171,12 +172,20 @@ const EditOption = () => {
                                 }
                               >
                                 <FormLabel htmlFor="point">Status</FormLabel>
-                                <RadioGroup defaultValue="2">
+                                <RadioGroup 
+                                {...field}
+                                >
                                 <Stack spacing={5} direction="row">
-                                    <Radio colorScheme="green" value="1">
+                                    <Radio onChange={(e)=>{
+                                  console.log();
+                                  form.setFieldValue(field.name, e.target.value)
+                                }} colorScheme="green" value="1">
                                     True
                                     </Radio>
-                                    <Radio colorScheme="red" value="2">
+                                    <Radio onChange={(e)=>{
+                                  console.log();
+                                  form.setFieldValue(field.name, e.target.value)
+                                }} colorScheme="red" value="0">
                                     False
                                     </Radio>
                                 </Stack>

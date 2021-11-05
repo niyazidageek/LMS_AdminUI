@@ -37,6 +37,7 @@ const Options = () => {
   useEffect(() => {
     dispatch(getQuestionsAction());
     dispatch(getOptionsAction());
+    console.log(questions)
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -46,12 +47,12 @@ const Options = () => {
   }
 
   function handleView(id) {
-    let path = `/admin/questions/details/${id}`;
+    let path = `/admin/options/details/${id}`;
     history.push(path);
   }
 
   function handleEdit(id) {
-    let path = `/admin/questions/edit/${id}`;
+    let path = `/admin/options/edit/${id}`;
     history.push(path);
   }
 
@@ -90,7 +91,7 @@ const Options = () => {
                         <Th textAlign="center">{id}</Th>
                         <Td textAlign="center">{name}</Td>
                         <Td textAlign="center">{question.name}</Td>
-                        <Td textAlign="center">{isCorrect}</Td>
+                        <Td textAlign="center">{isCorrect ? "True" : "False"}</Td>
                         <Td textAlign="center">
                           <Button
                             colorScheme="yellow"

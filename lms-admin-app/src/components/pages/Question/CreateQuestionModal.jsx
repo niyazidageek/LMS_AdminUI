@@ -17,6 +17,8 @@ import {
   Stack,
   Link,
   Heading,
+  RadioGroup,
+  Radio,
   Text,
 } from "@chakra-ui/react";
 import {
@@ -58,7 +60,7 @@ const CreateQuestionModal = ({ onClick, value, quizzes }) => {
       <Modal isOpen={value} onClose={onClick}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create a question</ModalHeader>
+          <ModalHeader>Create an option</ModalHeader>
           <ModalCloseButton />
 
           <Formik
@@ -137,6 +139,7 @@ const CreateQuestionModal = ({ onClick, value, quizzes }) => {
                     </Field>
                   </FormControl>
 
+                 
                   <FormControl id="file">
                     <Field name="file">
                       {({ field, form }) => (
@@ -152,6 +155,7 @@ const CreateQuestionModal = ({ onClick, value, quizzes }) => {
                               form.setFieldValue(field.name, e.target.files[0]);
                             }}
                           />
+                          
 
                           <Box display="flex" alignItems="center">
                             <Icon

@@ -36,6 +36,7 @@ import {
   FiBook,
   FiUsers,
   FiPenTool,
+  FiDisc,
   FiEdit2,
   FiFileText,
 } from "react-icons/fi";
@@ -50,6 +51,7 @@ const LinkItems = [
   { name: "Lessons", icon: FiEdit2, path: "/admin/lessons/all" },
   { name: "Quizzes", icon: FiFileText, path: "/admin/quizzes/all" },
   { name: "Questions", icon: FiAlignJustify, path: "/admin/questions/all" },
+  { name: "Options", icon: FiDisc, path: "/admin/options/all" },
 
   
 ];
