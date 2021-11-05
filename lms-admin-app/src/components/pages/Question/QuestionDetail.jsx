@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 // import normalizedDate from "../../../utils/normalizedDate";
-import nromalizedDateWithTime, { dateHelper } from "../../../utils/dateHelper"
+import nromalizedDateWithTime, { dateHelper } from "../../../utils/dateHelper";
 import {
   Table,
   Thead,
@@ -22,6 +22,7 @@ import { Flex, Text } from "@chakra-ui/layout";
 import SpinnerComponent from "../../elements/SpinnerComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuestionByIdAction } from "../../../actions/questionActions";
+import { fileHelper } from "../../../utils/fileHelper";
 
 const QuestionDetail = () => {
   let { id } = useParams();
@@ -70,7 +71,6 @@ const QuestionDetail = () => {
                   fontStyle="normal"
                 >
                   Name : {question.name}
-                  sa
                 </Text>
 
                 <Text
@@ -79,7 +79,7 @@ const QuestionDetail = () => {
                   fontWeight="semibold"
                   fontStyle="normal"
                 >
-                Quiz : {question.quiz.name}
+                  Quiz : {question.quiz.name}
                 </Text>
 
                 <Text
@@ -88,9 +88,8 @@ const QuestionDetail = () => {
                   fontWeight="semibold"
                   fontStyle="normal"
                 >
-                Quiz : {question.options.length}
+                  Quiz : {question.options.length}
                 </Text>
-        
               </Box>
 
               <Box
@@ -105,7 +104,6 @@ const QuestionDetail = () => {
                 flexFlow="column"
                 justifyContent="center"
               >
-
                 <Text
                   fontSize="3xl"
                   fontWeight="bold"
@@ -115,68 +113,63 @@ const QuestionDetail = () => {
                   Material:
                 </Text>
 
-                {
-                    question.fileName ?
-                    <Box
-                    display='flex'
-                    >
-                        <>
-                            <Stack
-                            margin="1rem 0"
-                            direction="row"
-                            >
-                            <Link cursor='pointer'  href={require(`${process.env.REACT_APP_FILES_FOLDER}${question.fileName}`).default}>
-                            {question.fileName}
-                            </Link>
+                {question.fileName ? (
+                  <Box display="flex">
+                    <>
+                      <Stack margin="1rem 0" direction="row">
+                        <Link
+                          cursor="pointer"
+                          href={fileHelper.convertToUrl(question.fileName)}
+                        >
+                          {question.fileName}
+                        </Link>
+                      </Stack>
+                    </>
+                  </Box>
+                ) : (
+                  <Text>No materials</Text>
+                )}
 
-                            </Stack>
-                        </>
-                    </Box>
-                    : <Text>No materials</Text>
-                }
-                
-                {/* <Text
+                <Text
                   fontSize="3xl"
                   fontWeight="bold"
                   fontStyle="normal"
                   paddingBottom="10"
                 >
-                  Students list
-                </Text> */}
-                {/* <Table variant="simple" colorScheme="blackAlpha">
-                  <Thead>
-                    <Tr>
-                      <Th>Name</Th>
-                      <Th>Surname</Th>
-                      <Th>Username</Th>
-                      <Th>Email</Th>
-                      <Th>Roles</Th>
-                      <Th>Details</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {group.appUsers.map((user, index) => {
-                      const { id, email, name, surname, username, roles } =
-                        user;
-                      return (
-                        <Tr key="index">
-                          <Td>{name}</Td>
-                          <Td>{surname}</Td>
-                          <Td>{username}</Td>
-                          <Td>{email}</Td>
-                          <Td>
-                            {roles.map((role) => {
-                              return <span>{role}</span>;
-                            })}
-                          </Td>
-                          <Td>
-                            <Button colorScheme="twitter">Details</Button>
-                          </Td>
-                        </Tr>
-                      );
-                    })}
-                  </Tbody>
-                </Table> */}
+                  Option list:
+                </Text>
+
+                {question.options.length > 0 ? (
+                  <Table variant="simple" colorScheme="blackAlpha">
+                    <Thead>
+                      <Tr>
+                        <Th>Name</Th>
+                        <Th>Status</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {question.options.map((opt, index) => {
+                        const { name, isCorrect } = opt;
+                        return (
+                          <Tr key={index}>
+                            <Td>{name}</Td>
+                            <Td>{isCorrect}</Td>
+                            <Td>
+                              <Button colorScheme="twitter">Details</Button>
+                            </Td>
+                          </Tr>
+                        );
+                      })}
+                    </Tbody>
+                  </Table>
+                ) : (
+                  <Text
+                    fontStyle="normal"
+                    paddingBottom="10"
+                  >
+                    There are no options
+                  </Text>
+                )}
               </Box>
             </Box>
           )}

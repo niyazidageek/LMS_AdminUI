@@ -33,6 +33,8 @@ const Login = () => {
         dispatch(signInAction(values));
     }
 
+    console.log(process.env.REACT_APP_API);
+
     if (isLoggedIn) return <Redirect to="/admin/home" />;
 
 

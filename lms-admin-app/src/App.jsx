@@ -123,6 +123,19 @@ function App() {
                     component={EditQuestion}
                   />
                 </Route>
+
+                <Route path="/admin/options">
+                  <PrivateRoute path="/admin/options/all" component={Questions} />
+                  <PrivateRoute
+                    path="/admin/options/details/:id"
+                    component={QuestionDetail}
+                  />
+                  <PrivateRoute
+                    path="/admin/options/edit/:id"
+                    component={EditQuestion}
+                  />
+                </Route>
+
                 <PrivateRoute
                   exact
                   path="/admin/register"
