@@ -32,6 +32,8 @@ import QuizDetail from "./components/pages/Quiz/QuizDetail";
 import Questions from "./components/pages/Question/Questions";
 import EditQuestion from "./components/pages/Question/EditQuestion";
 import QuestionDetail from "./components/pages/Question/QuestionDetail";
+import Options from "./components/pages/Option/Options";
+import EditOption from "./components/pages/Option/EditOption";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
@@ -125,14 +127,14 @@ function App() {
                 </Route>
 
                 <Route path="/admin/options">
-                  <PrivateRoute path="/admin/options/all" component={Questions} />
+                  <PrivateRoute path="/admin/options/all" component={Options} />
                   <PrivateRoute
                     path="/admin/options/details/:id"
                     component={QuestionDetail}
                   />
                   <PrivateRoute
                     path="/admin/options/edit/:id"
-                    component={EditQuestion}
+                    component={EditOption}
                   />
                 </Route>
 

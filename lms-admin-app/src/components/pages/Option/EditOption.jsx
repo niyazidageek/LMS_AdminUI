@@ -9,6 +9,8 @@ import {
   FormErrorMessage,
   Flex,
   Box,
+  Radio,
+  RadioGroup,
   Link,
   Popover,
   PopoverContent,
@@ -147,7 +149,7 @@ const EditOption = () => {
                                     label: option.question.name,
                                     value: option.question.id,
                                   }}
-                                  options={question.map((q) => ({
+                                  options={questions.map((q) => ({
                                     label: q.name,
                                     value: q.id,
                                   }))}
