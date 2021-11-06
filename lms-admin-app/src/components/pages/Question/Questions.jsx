@@ -30,14 +30,13 @@ const Questions = () => {
   const isFetching = useSelector((state) => state.authReducer.isFetching);
 
   const questions = useSelector((state) => state.questionReducer.questions);
-  const quizzes = useSelector(state=>state.quizReducer.quizzes);
-  
+  const quizzes = useSelector((state) => state.quizReducer.quizzes);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getQuestionsAction());
-    dispatch(getQuizzesAction())
+    dispatch(getQuizzesAction());
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -86,7 +85,7 @@ const Questions = () => {
                 </Thead>
                 <Tbody>
                   {questions.map((qs, index) => {
-                    const { id, quiz, name, point, options} = qs;
+                    const { id, quiz, name, point, options } = qs;
                     return (
                       <Tr key={index}>
                         <Th textAlign="center">{id}</Th>
@@ -127,7 +126,7 @@ const Questions = () => {
             </Box>
           )}
         </Flex>
-        {isFetching || !questions || !quizzes  ? null : (
+        {isFetching || !questions || !quizzes ? null : (
           <Button
             colorScheme="whatsapp"
             onClick={() => handleModal()}

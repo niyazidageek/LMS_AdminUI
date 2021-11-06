@@ -163,10 +163,7 @@ const QuestionDetail = () => {
                     </Tbody>
                   </Table>
                 ) : (
-                  <Text
-                    fontStyle="normal"
-                    paddingBottom="10"
-                  >
+                  <Text fontStyle="normal" paddingBottom="10">
                     There are no options
                   </Text>
                 )}

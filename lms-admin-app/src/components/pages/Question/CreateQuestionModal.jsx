@@ -40,12 +40,12 @@ const CreateQuestionModal = ({ onClick, value, quizzes }) => {
   const fileRef = useRef(undefined);
   function handleSubmit(values) {
     var formData = new FormData();
-    let { file, name, quizId, point,fileName } = values;
+    let { file, name, quizId, point, fileName } = values;
     let data = {
       name,
       quizId,
-      fileName, 
-      point
+      fileName,
+      point,
     };
     formData.append("Values", JSON.stringify(data));
 
@@ -66,10 +66,10 @@ const CreateQuestionModal = ({ onClick, value, quizzes }) => {
           <Formik
             initialValues={{
               name: "",
-              point:null,
+              point: null,
               quizId: "",
               fileName: null,
-              file: null
+              file: null,
             }}
             // validationSchema={lessonSchema}
             onSubmit={handleSubmit}
@@ -97,9 +97,7 @@ const CreateQuestionModal = ({ onClick, value, quizzes }) => {
                     <Field name="quizId">
                       {({ field, form }) => (
                         <FormControl
-                          isInvalid={
-                            form.errors.quizId && form.touched.quizId
-                          }
+                          isInvalid={form.errors.quizId && form.touched.quizId}
                         >
                           <FormLabel htmlFor="quizId">Quizzes</FormLabel>
                           <Select
@@ -125,9 +123,7 @@ const CreateQuestionModal = ({ onClick, value, quizzes }) => {
                     <Field name="point">
                       {({ field, form }) => (
                         <FormControl
-                          isInvalid={
-                            form.errors.point && form.touched.point
-                          }
+                          isInvalid={form.errors.point && form.touched.point}
                         >
                           <FormLabel htmlFor="point">Point</FormLabel>
                           <Input {...field} type="number" />
@@ -139,7 +135,6 @@ const CreateQuestionModal = ({ onClick, value, quizzes }) => {
                     </Field>
                   </FormControl>
 
-                 
                   <FormControl id="file">
                     <Field name="file">
                       {({ field, form }) => (
@@ -155,7 +150,6 @@ const CreateQuestionModal = ({ onClick, value, quizzes }) => {
                               form.setFieldValue(field.name, e.target.files[0]);
                             }}
                           />
-                          
 
                           <Box display="flex" alignItems="center">
                             <Icon
@@ -170,7 +164,8 @@ const CreateQuestionModal = ({ onClick, value, quizzes }) => {
                               onClick={() => fileRef.current.click()}
                               marginLeft="1"
                             >
-                              {fileRef.current !== undefined && fileRef.current !== null  ? (
+                              {fileRef.current !== undefined &&
+                              fileRef.current !== null ? (
                                 fileRef.current.files.length == 1 ? (
                                   fileRef.current.files[0].name
                                 ) : (

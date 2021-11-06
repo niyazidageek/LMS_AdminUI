@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import {
   BrowserRouter as Router,
@@ -34,6 +33,8 @@ import EditQuestion from "./components/pages/Question/EditQuestion";
 import QuestionDetail from "./components/pages/Question/QuestionDetail";
 import Options from "./components/pages/Option/Options";
 import EditOption from "./components/pages/Option/EditOption";
+import OptionDetail from "./components/pages/Option/OptionDetail";
+import Editor from "./utils/Editor";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
@@ -56,6 +57,9 @@ function App() {
                 );
               }}
             />
+
+            <Route path='/editor' component={Editor} />
+
             <Route path="/login" component={Login} />
             <Route
               path="/requestresetpassword"
@@ -130,7 +134,7 @@ function App() {
                   <PrivateRoute path="/admin/options/all" component={Options} />
                   <PrivateRoute
                     path="/admin/options/details/:id"
-                    component={QuestionDetail}
+                    component={OptionDetail}
                   />
                   <PrivateRoute
                     path="/admin/options/edit/:id"

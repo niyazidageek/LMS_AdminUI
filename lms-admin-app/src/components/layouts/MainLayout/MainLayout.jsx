@@ -52,8 +52,6 @@ const LinkItems = [
   { name: "Quizzes", icon: FiFileText, path: "/admin/quizzes/all" },
   { name: "Questions", icon: FiAlignJustify, path: "/admin/questions/all" },
   { name: "Options", icon: FiDisc, path: "/admin/options/all" },
-
-  
 ];
 
 export default function MainLayout({ children }) {
