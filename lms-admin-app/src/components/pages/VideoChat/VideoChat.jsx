@@ -40,7 +40,6 @@ function VideoChat() {
             userName,
             preferences: defaultPreference,
           });
-          console.log(participants);
           dispatch(setUserAction({
             [userStatusRef.key]: { name: userName, ...defaultPreference },
           },participants))

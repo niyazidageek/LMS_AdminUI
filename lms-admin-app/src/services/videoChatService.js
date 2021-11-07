@@ -40,7 +40,8 @@ export const initializeListensers = async (userId, participants) => {
   currentUserRef.child("offers").on("child_added", async (snapshot) => {
     const data = snapshot.val();
     if (data?.offer) {
-      const pc = store.getState().participants[data.offer.userId];
+      // console.log(data);
+      const pc = store.getState().videoChatReducer.participants[data.offer.userId].peerConnection;
       await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
       await createAnswer(data.offer.userId, userId, participants);
     }
@@ -49,7 +50,7 @@ export const initializeListensers = async (userId, participants) => {
   currentUserRef.child("offerCandidates").on("child_added", (snapshot) => {
     const data = snapshot.val();
     if (data.userId) {
-      const pc = store.getState().participants[data.offer.userId];
+      const pc = store.getState().videoChatReducer.participants[data.userId].peerConnection;
       pc.addIceCandidate(new RTCIceCandidate(data));
     }
   });
@@ -57,7 +58,7 @@ export const initializeListensers = async (userId, participants) => {
   currentUserRef.child("answers").on("child_added", (snapshot) => {
     const data = snapshot.val();
     if (data?.answer) {
-      const pc = store.getState().participants[data.offer.userId];
+      const pc = store.getState().videoChatReducer.participants[data.answer.userId].peerConnection;
       const answerDescription = new RTCSessionDescription(data.answer);
       pc.setRemoteDescription(answerDescription);
     }
@@ -66,7 +67,7 @@ export const initializeListensers = async (userId, participants) => {
   currentUserRef.child("answerCandidates").on("child_added", (snapshot) => {
     const data = snapshot.val();
     if (data.userId) {
-      const pc = store.getState().participants[data.offer.userId];
+      const pc = store.getState().videoChatReducer.participants[data.userId].peerConnection;
       pc.addIceCandidate(new RTCIceCandidate(data));
     }
   });
@@ -94,7 +95,7 @@ export const addConnection = (newUser, currentUser, stream) => {
 
 
 const createAnswer = async (otherUserId, userId, participants) => {
-    const pc = store.getState().participants[otherUserId];
+    const pc = store.getState().videoChatReducer.participants[otherUserId].peerConnection;
     const participantRef1 = participantRef.child(otherUserId);
     pc.onicecandidate = (event) => {
       event.candidate &&
