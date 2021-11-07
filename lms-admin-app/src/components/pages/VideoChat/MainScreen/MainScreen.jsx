@@ -15,7 +15,6 @@ const MainScreen = () => {
 
   const onMicClick = (micEnabled) => {
     if (mainStream) {
-      console.log(mainStream)
       mainStream.getAudioTracks()[0].enabled = micEnabled;
       dispatch(updateUserAction(currentUser,{ audio: micEnabled }))
     }

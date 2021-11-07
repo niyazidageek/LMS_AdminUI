@@ -69,12 +69,20 @@ export const updateParticipantAction = (user) => (dispatch)=>{
     })
 }
 
-export const removeParticipantAction = (participants,userId) => (dispatch) =>{
+export const removeParticipantAction = (participants,userId) => async (dispatch) =>{
+
+    console.log(participants)
     delete participants[userId]
     dispatch({
         type:actionTypes.REMOVE_VIDEO_PARTICIPANT,
         payload:{
             participants:participants
         }
+    })
+}
+
+export const fetchVideoStateAction = () => (dispatch) => {
+    dispatch({
+        type:actionTypes.FETCH_VIDEO_CHAT_STATE
     })
 }

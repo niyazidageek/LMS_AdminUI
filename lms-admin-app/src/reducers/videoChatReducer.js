@@ -40,6 +40,10 @@ const videoChatReducer = (state = initialState, action)=>{
                 ...state,
                 currentUser:{...state.currentUser}
             }
+        case actionTypes.FETCH_VIDEO_CHAT_STATE:
+            return{
+                ...state
+            }
         case actionTypes.REMOVE_VIDEO_PARTICIPANT:
             return{
                 ...state,

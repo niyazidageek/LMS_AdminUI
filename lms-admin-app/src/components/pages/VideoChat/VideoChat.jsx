@@ -7,7 +7,8 @@ import {
     addParticipantAction,
     setUserAction,
     updateParticipantAction,
-    removeParticipantAction
+    removeParticipantAction,
+    fetchVideoStateAction
 } from "../../../actions/videoChatActions"
 import { useSelector, useDispatch } from "react-redux";
 
@@ -28,7 +29,6 @@ function VideoChat() {
       const stream = await getUserStream();
       stream.getVideoTracks()[0].enabled = false;
       dispatch(setMainStreamAction(stream));
-  
       connectedRef.on("value", (snap) => {
         if (snap.val()) {
           const defaultPreference = {
@@ -53,9 +53,10 @@ function VideoChat() {
   
     const isUserSet = !!currentUser;
     const isStreamSet = !!mainStream;
+    const isParticipantsSet = Object.keys(participants).length === 0;
   
     useEffect(() => {
-      if (isStreamSet && isUserSet) {
+      if (isStreamSet && isUserSet && isParticipantsSet) {
         participantRef.on("child_added", (snap) => {
           const preferenceUpdateEvent = participantRef
             .child(snap.key)
@@ -76,10 +77,10 @@ function VideoChat() {
           },currentUser,mainStream))
         });
         participantRef.on("child_removed", (snap) => {
-          dispatch(removeParticipantAction(snap.key))
+          dispatch(removeParticipantAction(participants,snap.key))
         });
       }
-    }, [isStreamSet, isUserSet]);
+    }, [isStreamSet, isUserSet, isParticipantsSet]);
   
     return (
       <div className="App">

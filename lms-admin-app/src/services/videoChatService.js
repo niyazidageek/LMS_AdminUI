@@ -40,7 +40,6 @@ export const initializeListensers = async (userId, participants) => {
   currentUserRef.child("offers").on("child_added", async (snapshot) => {
     const data = snapshot.val();
     if (data?.offer) {
-      // console.log(data);
       const pc = store.getState().videoChatReducer.participants[data.offer.userId].peerConnection;
       await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
       await createAnswer(data.offer.userId, userId, participants);
