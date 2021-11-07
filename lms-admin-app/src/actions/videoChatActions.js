@@ -11,10 +11,10 @@ export const setMainStreamAction = (stream) => async(dispatch)=>{
     })
 }
 
-export const setUserAction = (user) => (dispatch) => {
+export const setUserAction = (user, participants) => async (dispatch) => {  
     const userId = Object.keys(user)[0];
     user[userId].avatarColor = generateColor();
-    initializeListensers(userId);
+    await initializeListensers(userId,participants);
     dispatch({
         type:actionTypes.SET_VIDEO_USER,
         payload:{
@@ -48,8 +48,8 @@ export const addParticipantAction = (user, currentUser, mainStream) => (dispatch
     })
 }
 
-export const updateUserAction = (user) => (dispatch) =>{
-    const userId = Object.keys(user)[0];
+export const updateUserAction = (currentUser,user) => async (dispatch) =>{
+    const userId = Object.keys(currentUser)[0];
     updatePreference(userId, user)
 
     dispatch({
@@ -69,7 +69,7 @@ export const updateParticipantAction = (user) => (dispatch)=>{
     })
 }
 
-export const removeParticipantAction = (participants,userId) =>{
+export const removeParticipantAction = (participants,userId) => (dispatch) =>{
     delete participants[userId]
     dispatch({
         type:actionTypes.REMOVE_VIDEO_PARTICIPANT,

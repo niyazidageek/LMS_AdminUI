@@ -31,8 +31,9 @@ const videoChatReducer = (state = initialState, action)=>{
                 }
             }
         case actionTypes.UPDATE_VIDEO_USER:
-            state.currentUser[Object.keys(action.payload.currentUser)[0]] = {
-                ...state.currentUser[Object.keys(action.payload.currentUser)[0]],
+            const userId = Object.keys(state.currentUser)[0];
+            state.currentUser[userId] = {
+                ...state.currentUser[userId],
                 ...action.payload.currentUser,
               };
             return{

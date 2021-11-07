@@ -10,6 +10,7 @@ import lessonReducer from "./lessonReducer";
 import quizReducer from "./quizReducer";
 import questionReducer from "./questionReducer"
 import optionReducer from "./optionReducer"
+import videoChatReducer from "./videoChatReducer"
 
 const persistConfig = {
   key: "root",
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
   lessonReducer,
   quizReducer,
   questionReducer,
-  optionReducer
+  optionReducer,
+  videoChatReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

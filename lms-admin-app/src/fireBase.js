@@ -2,9 +2,9 @@ import firebase from "firebase/compat/app";
 import database from "firebase/compat/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDB0jgSIB5bjPZafeTsp7eabPxMg_5kdlI",
-  databaseUrl: "https://videochat-app-f3dfa-default-rtdb.firebaseio.com/",
-  projectId: "videochat-app-f3dfa",
+  apiKey: "AIzaSyBO_O5ACfLmsX1vbnh0-ENpDVkHpwOuVRo",
+  databaseUrl: "https://lms-admin-video-chat-default-rtdb.firebaseio.com/",
+  projectId: "lms-admin-video-chat",
 };
 
 firebase.initializeApp(firebaseConfig);

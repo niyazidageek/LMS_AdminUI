@@ -35,6 +35,7 @@ import Options from "./components/pages/Option/Options";
 import EditOption from "./components/pages/Option/EditOption";
 import OptionDetail from "./components/pages/Option/OptionDetail";
 import Editor from "./utils/Editor";
+import VideoChat from "./components/pages/VideoChat/VideoChat";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
@@ -59,6 +60,7 @@ function App() {
             />
 
             <Route path='/editor' component={Editor} />
+            <Route path='/videochat' component={VideoChat} />
 
             <Route path="/login" component={Login} />
             <Route
