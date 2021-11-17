@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 // import normalizedDate from "../../../utils/normalizedDate";
-import nromalizedDateWithTime, { dateHelper } from "../../../utils/dateHelper"
+import nromalizedDateWithTime, { dateHelper } from "../../../utils/dateHelper";
 import {
   Table,
   Thead,
@@ -81,7 +81,7 @@ const LessonDetail = () => {
                   fontWeight="semibold"
                   fontStyle="normal"
                 >
-                Group : {lesson.group.name}
+                  Group : {lesson.group.name}
                 </Text>
 
                 <Text
@@ -90,7 +90,8 @@ const LessonDetail = () => {
                   fontWeight="semibold"
                   fontStyle="normal"
                 >
-                  Start time : {dateHelper.normalizedDateWithTime(lesson.startDate)}
+                  Start time :{" "}
+                  {dateHelper.normalizedDateWithTime(lesson.startDate)}
                 </Text>
 
                 <Text
@@ -115,7 +116,6 @@ const LessonDetail = () => {
                 flexFlow="column"
                 justifyContent="center"
               >
-
                 <Text
                   fontSize="3xl"
                   fontWeight="bold"
@@ -125,80 +125,30 @@ const LessonDetail = () => {
                   Materials:
                 </Text>
 
-                {
-                    lesson.lessonMaterials.length !==0 && lesson.lessonMaterials !==null ?
-                    <Box
-                    display='fle'
-                    >
-                        {
-                            
-                            lesson.lessonMaterials.map((lm,index)=>{
-                                return(
-                                    <>
-                                      <Stack
-                                        margin="1rem 0"
-                                        key={index}
-                                        direction="row"
-                                      >
-                                        <Link cursor='pointer'  href={fileHelper.convertToUrl(lm.fileName)}>
-                                       {lm.fileName}
-                                       </Link>
-
-                                      </Stack>
-                                      {lesson.lessonMaterials.length > 1 ? (
-                                        <Divider />
-                                      ) : null}
-                                    </>
-                 
-                                )
-                            })
-                        }
-                    </Box>
-                    : <Text>No materials</Text>
-                }
-                
-                {/* <Text
-                  fontSize="3xl"
-                  fontWeight="bold"
-                  fontStyle="normal"
-                  paddingBottom="10"
-                >
-                  Students list
-                </Text> */}
-                {/* <Table variant="simple" colorScheme="blackAlpha">
-                  <Thead>
-                    <Tr>
-                      <Th>Name</Th>
-                      <Th>Surname</Th>
-                      <Th>Username</Th>
-                      <Th>Email</Th>
-                      <Th>Roles</Th>
-                      <Th>Details</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {group.appUsers.map((user, index) => {
-                      const { id, email, name, surname, username, roles } =
-                        user;
+                {lesson.lessonMaterials.length !== 0 &&
+                lesson.lessonMaterials !== null ? (
+                  <Box display="fle">
+                    {lesson.lessonMaterials.map((lm, index) => {
                       return (
-                        <Tr key="index">
-                          <Td>{name}</Td>
-                          <Td>{surname}</Td>
-                          <Td>{username}</Td>
-                          <Td>{email}</Td>
-                          <Td>
-                            {roles.map((role) => {
-                              return <span>{role}</span>;
-                            })}
-                          </Td>
-                          <Td>
-                            <Button colorScheme="twitter">Details</Button>
-                          </Td>
-                        </Tr>
+                        <>
+                          <Stack margin="1rem 0" key={index} direction="row">
+                            <Link
+                              cursor="pointer"
+                              href={fileHelper.convertToUrl(lm.fileName)}
+                            >
+                              {lm.fileName}
+                            </Link>
+                          </Stack>
+                          {lesson.lessonMaterials.length > 1 ? (
+                            <Divider />
+                          ) : null}
+                        </>
                       );
                     })}
-                  </Tbody>
-                </Table> */}
+                  </Box>
+                ) : (
+                  <Text>No materials</Text>
+                )}
               </Box>
             </Box>
           )}
@@ -209,4 +159,3 @@ const LessonDetail = () => {
 };
 
 export default LessonDetail;
-

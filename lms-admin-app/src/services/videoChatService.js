@@ -34,7 +34,6 @@ export const createOffer = async (peerConnection, receiverId, createdID) => {
 };
 
 
-
 export const initializeListensers = async (userId, participants) => {
   const currentUserRef = participantRef.child(userId);
   currentUserRef.child("offers").on("child_added", async (snapshot) => {
@@ -91,8 +90,29 @@ export const addConnection = (newUser, currentUser, stream) => {
     return newUser;
   };
 
+  export const createUserStreamWithVideo = async () => {
+    const localStream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: true,
+    });
+    return localStream;
+  };
 
+  export const createUserStreamWithoutVideo = async ()=>{
+    const localStream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: false
+    });
+    return localStream;
+  }
 
+  export const killVideoTracks = (stream) =>{ 
+    let videoTracks = stream.getTracks();
+    for( var i = 0 ; i < videoTracks.length ; i++ ) videoTracks[i].enabled = false;
+
+  }
+
+  
 const createAnswer = async (otherUserId, userId, participants) => {
     const pc = store.getState().videoChatReducer.participants[otherUserId].peerConnection;
     const participantRef1 = participantRef.child(otherUserId);

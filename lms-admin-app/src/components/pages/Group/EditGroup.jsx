@@ -24,6 +24,8 @@ import {
   updateGroupAction,
 } from "../../../actions/groupActions";
 import { getStudentsAction } from "../../../actions/studentActions";
+import { getTeachersAction } from "../../../actions/teacherActions";
+import {roles} from "../../../utils/roles"
 
 const EditGroup = () => {
   let { id } = useParams();
@@ -32,12 +34,13 @@ const EditGroup = () => {
   const group = useSelector((state) => state.groupReducer.group);
   const subjects = useSelector((state) => state.subjectReducer.subjects);
   const students = useSelector((state) => state.studentReducer.students);
+  const teachers = useSelector((state) => state.teacherReducer.teachers);
 
   const token = useSelector((state) => state.authReducer.jwt);
   const isFetching = useSelector((state) => state.authReducer.isFetching);
 
   function handleSubmit(values) {
-    let { name, subjectId, startDate, endDate, studentIds } = values;
+    let { name, subjectId, startDate, endDate, studentIds, teacherId } = values;
     startDate = new Date(startDate).toISOString();
     endDate = new Date(endDate).toISOString();
     let data = {
@@ -45,16 +48,15 @@ const EditGroup = () => {
       subjectId,
       startDate: startDate,
       endDate: endDate,
-      appUsers: studentIds,
+      appUserIds: studentIds.concat(teacherId),
     };
-
     dispatch(updateGroupAction(data, id, token));
   }
-
   useEffect(() => {
     dispatch(getGroupByIdAction(id));
     dispatch(getSubjectsAction());
     dispatch(getStudentsAction());
+    dispatch(getTeachersAction())
   }, []);
 
   return (
@@ -68,9 +70,10 @@ const EditGroup = () => {
           alignItems="center"
           pos="relative"
         >
-          {isFetching || !group || !students || !subjects ? (
+          {false || !group || !students || !teachers || !subjects ? (
             <SpinnerComponent />
           ) : (
+            console.log(isFetching),
             <Flex align={"center"} justify={"center"}>
               <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
                 <Stack align={"center"}>
@@ -89,7 +92,8 @@ const EditGroup = () => {
                       subjectId: group.subject.id,
                       startDate: group.startDate.slice(0, 10),
                       endDate: group.endDate.slice(0, 10),
-                      studentIds: group.appUsers.map((st) => ({ id: st.id })),
+                      studentIds: group.appUsers.filter((st) => !st.roles.some(r=>r==roles.Teacher)).map(st=>st.id),
+                      teacherId:group.appUsers.filter(au=>au.roles.some(r=>r==roles.Teacher)).map(au=>au.id) ?? "" 
                     }}
                     validationSchema={groupSchema}
                     onSubmit={handleSubmit}
@@ -206,10 +210,10 @@ const EditGroup = () => {
                                   onChange={(option) => {
                                     form.setFieldValue(
                                       field.name,
-                                      option.map((opt) => ({ id: opt.value }))
+                                      option.map((opt) => opt.value)
                                     );
                                   }}
-                                  defaultValue={group.appUsers.map((a) => ({
+                                  defaultValue={group.appUsers.filter(a=>!a.roles.some(r=>r==roles.Teacher)).map((a) => ({
                                     label: `${a.name} ${a.surname}`,
                                     value: a.id,
                                   }))}
@@ -222,6 +226,48 @@ const EditGroup = () => {
                                 />
                                 <FormErrorMessage>
                                   {form.errors.studentIds}
+                                </FormErrorMessage>
+                              </FormControl>
+                            )}
+                          </Field>
+                        </FormControl>
+
+                        <FormControl id="teacherId">
+                          <Field name="teacherId">
+                            {({ field, form }) => (
+                              <FormControl
+                                isInvalid={
+                                  form.errors.teacherId &&
+                                  form.touched.teacherId
+                                }
+                              >
+                                <FormLabel htmlFor="teacherId">
+                                  Select a teacher
+                                </FormLabel>
+                                <Select
+                                isSearchable
+                                  name="teacherId"
+                                  onChange={(option) => {
+                                    form.setFieldValue(
+                                      field.name,
+                                      option.value
+                                    );
+                                  }}
+                                  options={teachers.map((a) => ({
+                                    label: `${a.name} ${a.surname}`,
+                                    value: a.id,
+                                  }))}
+                                  defaultValue={{
+                                  
+                                    label: `${group.appUsers.filter(au=>au.roles.some(r=>r==roles.Teacher)).map(au=>au.name)} ${group.appUsers.filter(au=>au.roles.some(r=>r==roles.Teacher)).map(au=>au.surname)}`,
+                                    value: group.appUsers.filter(au=>au.roles.some(r=>r==roles.Teacher)).map(au=>au.id),
+                                  }
+                                  }
+                                  placeholder="Select teachers"
+                                  closeMenuOnSelect={false}
+                                />
+                                <FormErrorMessage>
+                                  {form.errors.teacherId}
                                 </FormErrorMessage>
                               </FormControl>
                             )}

@@ -4,6 +4,7 @@ import Participants from "../Participants/Participants";
 import "./MainScreen.css";
 import { useSelector, useDispatch } from "react-redux";
 import {setMainStreamAction, updateUserAction} from "../../../../actions/videoChatActions"
+import { createUserStream, createUserStreamWithoutVideo, createUserStreamWithVideo, killVideoTracks, replaceTracks } from "../../../../services/videoChatService";
 
 const MainScreen = () => {
   const participants = useSelector(state=>state.videoChatReducer.participants)
@@ -19,7 +20,7 @@ const MainScreen = () => {
       dispatch(updateUserAction(currentUser,{ audio: micEnabled }))
     }
   };
-  const onVideoClick = (videoEnabled) => {
+  const onVideoClick = async (videoEnabled) => {
     if (mainStream) {
       mainStream.getVideoTracks()[0].enabled = videoEnabled;
       dispatch(updateUserAction(currentUser,{ video: videoEnabled }))

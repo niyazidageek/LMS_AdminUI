@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import draftToMarkdown from 'draftjs-to-markdown';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
@@ -7,6 +7,7 @@ import draftToHtml from 'draftjs-to-html';
 import classes from './main.module.scss'
 import '../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { chakraHelper } from './chakraHelper';
+import axios from 'axios'
 
 const EditorUtil = () => {
 
@@ -22,6 +23,18 @@ const EditorUtil = () => {
         setEditorState(editorState)
     }
 
+    function onSubmit(rawContentState){
+      let formdata = new FormData();
+        formdata.append("Values", JSON.stringify(rawContentState))
+
+        // console.log(rawContentState);
+        axios.post('https://localhost:5001/api/Lesson/CreateLesson',formdata, {
+          headers: { 
+            "Content-Type": "multipart/form-data"
+           },
+        })
+    }
+
     function uploadImageCallBack(file) {
         return new Promise(
           (resolve, reject) => {
@@ -33,11 +46,17 @@ const EditorUtil = () => {
       }
 
       const rawContentState = convertToRaw(editorState.getCurrentContent());
+      
+      const[data,setData] = useState(null);
+      useEffect(()=>{
+        axios.get(process.env.REACT_APP_FILES_API+'944d2068-4806-42b4-a171-61a027eb66e6.txt')
+          .then(res=>setEditorState(EditorState.createWithContent(convertFromRaw(res.data))))
+      },[])
+
       const html = (draftToHtml(rawContentState));
 
     return (
-      console.log(editorState),
-      
+      console.log(data),
         <>
             <Editor
             editorState={editorState}
@@ -53,6 +72,10 @@ const EditorUtil = () => {
             />
 
         <div className={classes.renderedHtml} dangerouslySetInnerHTML={{__html: html}}></div>
+
+        <button onClick={()=>onSubmit(rawContentState)} style={{backgroundColor:'green'}}>
+          Submit
+        </button>
         </>
     );
 }

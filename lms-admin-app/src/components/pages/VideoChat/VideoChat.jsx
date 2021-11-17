@@ -11,23 +11,26 @@ import {
     fetchVideoStateAction
 } from "../../../actions/videoChatActions"
 import { useSelector, useDispatch } from "react-redux";
+import { createUserStream, createUserStreamWithoutVideo, createUserStreamWithVideo, killVideoTracks } from "../../../services/videoChatService";
 
 function VideoChat() {
     const dispatch = useDispatch();
     const participants = useSelector(state=>state.videoChatReducer.participants)
     const mainStream = useSelector(state=>state.videoChatReducer.mainStream)
     const currentUser = useSelector(state=>state.videoChatReducer.currentUser)
-    const getUserStream = async () => {
-      const localStream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: true,
-      });
+    // const getUserStream = async () => {
+    //   const localStream = await navigator.mediaDevices.getUserMedia({
+    //     audio: true,
+    //     video: true,
+    //   });
   
-      return localStream;
-    };
+    //   return localStream;
+    // };
+
     useEffect(async () => {
-      const stream = await getUserStream();
-      stream.getVideoTracks()[0].enabled = false;
+      const stream = await createUserStreamWithVideo()
+      killVideoTracks(stream)
+      
       dispatch(setMainStreamAction(stream));
       connectedRef.on("value", (snap) => {
         if (snap.val()) {

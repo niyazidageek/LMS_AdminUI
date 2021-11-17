@@ -29,13 +29,13 @@ import {
 } from "@chakra-ui/modal";
 import { createGroupAction } from "../../../actions/groupActions";
 
-const CreateGroupModal = ({ onClick, value, subjects, students }) => {
+const CreateGroupModal = ({ onClick, value, subjects, students, teachers }) => {
   const isFetching = useSelector((state) => state.authReducer.isFetching);
-  const token = useSelector(state=>state.authReducer.jwt)
+  const token = useSelector((state) => state.authReducer.jwt);
   const dispatch = useDispatch();
 
   function handleSubmit(values) {
-    let { name, subjectId, startDate, endDate, studentIds } = values;
+    let { name, subjectId, startDate, endDate, studentIds, teacherId } = values;
     startDate = new Date(startDate).toISOString();
     endDate = new Date(endDate).toISOString();
     let data = {
@@ -43,11 +43,10 @@ const CreateGroupModal = ({ onClick, value, subjects, students }) => {
       subjectId,
       startDate: startDate,
       endDate: endDate,
-      appUserIds: studentIds,
+      appUserIds: studentIds.concat(teacherId),
     };
-    console.log(values);
-    dispatch(createGroupAction(data, token))
-    onClick()
+    dispatch(createGroupAction(data, token));
+    onClick();
   }
 
   return (
@@ -60,11 +59,12 @@ const CreateGroupModal = ({ onClick, value, subjects, students }) => {
 
           <Formik
             initialValues={{
-              name: '',
-              subjectId: '',
-              startDate: '',
-              endDate: '',
+              name: "",
+              subjectId: "",
+              startDate: "",
+              endDate: "",
               studentIds: [],
+              teacherId: "",
             }}
             validationSchema={groupSchema}
             onSubmit={handleSubmit}
@@ -116,44 +116,39 @@ const CreateGroupModal = ({ onClick, value, subjects, students }) => {
                     </Field>
                   </FormControl>
                   <FormControl id="startDate">
-                          <Field name="startDate">
-                            {({ field, form }) => (
-                              <FormControl
-                                isInvalid={
-                                  form.errors.startDate &&
-                                  form.touched.startDate
-                                }
-                              >
-                                <FormLabel htmlFor="startDate">
-                                  Start Date
-                                </FormLabel>
-                                <Input {...field} type="date" />
-                                <FormErrorMessage>
-                                  {form.errors.startDate}
-                                </FormErrorMessage>
-                              </FormControl>
-                            )}
-                          </Field>
-                          </FormControl>
-                          <FormControl id="endDate">
-                          <Field name="endDate">
-                            {({ field, form }) => (
-                              <FormControl
-                                isInvalid={
-                                  form.errors.endDate && form.touched.endDate
-                                }
-                              >
-                                <FormLabel htmlFor="endDate">
-                                  End Date
-                                </FormLabel>
-                                <Input {...field} type="date" />
-                                <FormErrorMessage>
-                                  {form.errors.endDate}
-                                </FormErrorMessage>
-                              </FormControl>
-                            )}
-                          </Field>
+                    <Field name="startDate">
+                      {({ field, form }) => (
+                        <FormControl
+                          isInvalid={
+                            form.errors.startDate && form.touched.startDate
+                          }
+                        >
+                          <FormLabel htmlFor="startDate">Start Date</FormLabel>
+                          <Input {...field} type="date" />
+                          <FormErrorMessage>
+                            {form.errors.startDate}
+                          </FormErrorMessage>
                         </FormControl>
+                      )}
+                    </Field>
+                  </FormControl>
+                  <FormControl id="endDate">
+                    <Field name="endDate">
+                      {({ field, form }) => (
+                        <FormControl
+                          isInvalid={
+                            form.errors.endDate && form.touched.endDate
+                          }
+                        >
+                          <FormLabel htmlFor="endDate">End Date</FormLabel>
+                          <Input {...field} type="date" />
+                          <FormErrorMessage>
+                            {form.errors.endDate}
+                          </FormErrorMessage>
+                        </FormControl>
+                      )}
+                    </Field>
+                  </FormControl>
                   <FormControl id="studentIds">
                     <Field name="studentIds">
                       {({ field, form }) => (
@@ -171,7 +166,7 @@ const CreateGroupModal = ({ onClick, value, subjects, students }) => {
                             onChange={(option) => {
                               form.setFieldValue(
                                 field.name,
-                                option.map((opt) => (opt.value))
+                                option.map((opt) => opt.value)
                               );
                             }}
                             options={students.map((a) => ({
@@ -188,7 +183,40 @@ const CreateGroupModal = ({ onClick, value, subjects, students }) => {
                       )}
                     </Field>
                   </FormControl>
-                  
+
+                  <FormControl id="teacherId">
+                    <Field name="teacherId">
+                      {({ field, form }) => (
+                        <FormControl
+                          isInvalid={
+                            form.errors.teacherId && form.touched.teacherId
+                          }
+                        >
+                          <FormLabel htmlFor="teacherId">
+                            Select a teacher
+                          </FormLabel>
+                          <Select
+                            name="teacherId"
+                            onChange={(option) => {
+                              form.setFieldValue(
+                                field.name,
+                                option.value
+                              );
+                            }}
+                            options={teachers.map((a) => ({
+                              label: `${a.name} ${a.surname}`,
+                              value: a.id,
+                            }))}
+                            placeholder="Select teachers"
+                            closeMenuOnSelect={false}
+                          />
+                          <FormErrorMessage>
+                            {form.errors.teacherId}
+                          </FormErrorMessage>
+                        </FormControl>
+                      )}
+                    </Field>
+                  </FormControl>
 
                   <Stack spacing={8}>
                     <Stack

@@ -26,6 +26,7 @@ import { AuthErrorAlert } from "../../alerts/AuthErrorAlert";
 import CreateGroupModal from "./CreateGroupModal";
 import { getSubjectsAction } from "../../../actions/subjectActions";
 import { getStudentsAction } from "../../../actions/studentActions";
+import { getTeachersAction } from "../../../actions/teacherActions";
 
 const Groups = () => {
   const history = useHistory();
@@ -35,15 +36,14 @@ const Groups = () => {
   const groups = useSelector((state) => state.groupReducer.groups);
   const students = useSelector((state) => state.studentReducer.students);
   const subjects = useSelector((state) => state.subjectReducer.subjects);
-
-  console.log(groups);
-
+  const teachers = useSelector((state) => state.teacherReducer.teachers);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getGroupsAction());
     dispatch(getSubjectsAction());
     dispatch(getStudentsAction());
+    dispatch(getTeachersAction())
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -73,7 +73,7 @@ const Groups = () => {
           alignItems="center"
           pos="relative"
         >
-          {isFetching || !groups || !students || !subjects ? (
+          {isFetching || !groups || !students || !teachers || !subjects ? (
             <SpinnerComponent />
           ) : (
             <Box overflowX="auto" width="100%">
@@ -132,13 +132,14 @@ const Groups = () => {
                     value={isOpen}
                     subjects={subjects}
                     students={students}
+                    teachers={teachers}
                   />
                 </Tbody>
               </Table>
             </Box>
           )}
         </Flex>
-        {isFetching || !groups || !students || !subjects ? null : (
+        {isFetching || !groups || !students || !teachers || !subjects ? null : (
           <Button
             colorScheme="whatsapp"
             onClick={() => handleModal()}
