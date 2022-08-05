@@ -18,6 +18,7 @@ import { Flex, Text } from "@chakra-ui/layout";
 import SpinnerComponent from "../../elements/SpinnerComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { getGroupByIdAction } from "../../../actions/groupActions";
+import { roles } from "../../../utils/roles";
 
 const GroupDetail = () => {
   let { id } = useParams();
@@ -49,6 +50,7 @@ const GroupDetail = () => {
               flexFlow="column"
             >
               <Box
+                bg="whitesmoke"
                 boxShadow="lg"
                 borderRadius="xl"
                 width="100%"
@@ -68,14 +70,21 @@ const GroupDetail = () => {
                   Subject : {group.subject.name}
                 </Text>
 
-                {group.teacher ? (
+                {group.appUsers
+                  .filter((au) => au.roles.some((r) => r == roles.Teacher))
+                  .map((au) => au.id) ? (
                   <Text
                     paddingTop="5"
                     fontSize="2xl"
                     fontWeight="semibold"
                     fontStyle="normal"
                   >
-                    Teacher : {group.teacher.name} {group.teacher.surname}
+                    Teacher :{" "}
+                    {group.appUsers
+                      .filter((au) => au.roles.some((r) => r == roles.Teacher))
+                      .map((au) => {
+                        return au.name + " " + au.surname;
+                      })}
                   </Text>
                 ) : (
                   <Text
@@ -94,7 +103,7 @@ const GroupDetail = () => {
                   fontWeight="semibold"
                   fontStyle="normal"
                 >
-                  Number of students : {group.appUsersCount}
+                  Number of participants : {group.appUsersCount}
                 </Text>
 
                 <Text
@@ -117,6 +126,7 @@ const GroupDetail = () => {
               </Box>
 
               <Box
+                mt="0.5rem"
                 boxShadow="lg"
                 borderRadius="xl"
                 width="100%"
@@ -127,6 +137,7 @@ const GroupDetail = () => {
                 display="flex"
                 flexFlow="column"
                 justifyContent="center"
+                bg="whitesmoke"
               >
                 <Text
                   fontSize="3xl"
@@ -144,7 +155,6 @@ const GroupDetail = () => {
                       <Th>Username</Th>
                       <Th>Email</Th>
                       <Th>Roles</Th>
-                      <Th>Details</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
@@ -161,9 +171,6 @@ const GroupDetail = () => {
                             {roles.map((role) => {
                               return <span>{role}</span>;
                             })}
-                          </Td>
-                          <Td>
-                            <Button colorScheme="twitter">Details</Button>
                           </Td>
                         </Tr>
                       );

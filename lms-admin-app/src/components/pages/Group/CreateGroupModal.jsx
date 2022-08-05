@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { Button } from "@chakra-ui/button";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,11 +28,15 @@ import {
   ModalOverlay,
 } from "@chakra-ui/modal";
 import { createGroupAction } from "../../../actions/groupActions";
+import { searchAllStudentsAction } from "../../../actions/studentActions";
+import { searchAllTeachersAction } from "../../../actions/teacherActions";
 
-const CreateGroupModal = ({ onClick, value, subjects, students, teachers }) => {
+const CreateGroupModal = ({ onClick, value, subjects,fetchMore }) => {
   const isFetching = useSelector((state) => state.authReducer.isFetching);
   const token = useSelector((state) => state.authReducer.jwt);
   const dispatch = useDispatch();
+  const [students, setStudents] = useState([]);
+  const [teachers, setTeachers] = useState([]);
 
   function handleSubmit(values) {
     let { name, subjectId, startDate, endDate, studentIds, teacherId } = values;
@@ -45,13 +49,34 @@ const CreateGroupModal = ({ onClick, value, subjects, students, teachers }) => {
       endDate: endDate,
       appUserIds: studentIds.concat(teacherId),
     };
-    dispatch(createGroupAction(data, token));
+    let promise = dispatch(createGroupAction(data, token));
+    promise.then(()=>fetchMore())
     onClick();
   }
 
+  function handleStudentSearch(input) {
+    if (input != "") {
+      let students = dispatch(searchAllStudentsAction(input.trim()));
+      students.then((res) => {
+        res ? setStudents(res) : setStudents([]);
+      });
+    }
+  }
+
+  function handleTeacherSearch(input) {
+    if (input != "") {
+      let teachers = dispatch(searchAllTeachersAction(input.trim()));
+      teachers.then((res) => {
+        res ? setTeachers(res) : setTeachers([]);
+      });
+    }
+  }
+
+
+
   return (
     <>
-      <Modal isOpen={value} onClose={onClick}>
+      <Modal isOpen={value} size='3xl' onClose={onClick}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Create a group</ModalHeader>
@@ -162,6 +187,9 @@ const CreateGroupModal = ({ onClick, value, subjects, students, teachers }) => {
                           </FormLabel>
                           <Select
                             isMulti
+                            onInputChange={(e) =>
+                              handleStudentSearch(e)
+                            }
                             name="studentIds"
                             onChange={(option) => {
                               form.setFieldValue(
@@ -196,6 +224,9 @@ const CreateGroupModal = ({ onClick, value, subjects, students, teachers }) => {
                             Select a teacher
                           </FormLabel>
                           <Select
+                           onInputChange={(e) =>
+                            handleTeacherSearch(e)
+                          }
                             name="teacherId"
                             onChange={(option) => {
                               form.setFieldValue(

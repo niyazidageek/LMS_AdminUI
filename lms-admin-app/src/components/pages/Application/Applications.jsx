@@ -32,20 +32,29 @@ import { AuthMessageAlert } from "../../alerts/AuthMessageAlert";
 import { AuthErrorAlert } from "../../alerts/AuthErrorAlert";
 
 import {
-  deleteSubjectByIdAction,
   getSubjectsAction,
   getSubjectsByPageAndSizeAction,
 } from "../../../actions/subjectActions";
-import CreateSubjectModal from "./CreateSubjectModal";
+import {
+  deleteApplicationByIdAction,
+  getApplicationsByPageAndSizeAction,
+} from "../../../actions/applicationActions";
+import { dateHelper } from "../../../utils/dateHelper";
+import ApplicationViewModal from "./ApplicationViewModal";
 
-const Subjects = () => {
+const Applications = () => {
   const history = useHistory();
 
   const [pageCount, setPageCount] = useState(0);
-  const [subjects, setSubjects] = useState([]);
-  const newSubjects = useSelector((state) => state.subjectReducer.subjects);
-  const total = useSelector((state) => state.subjectReducer.count);
-  const isFetching = useSelector((state) => state.authReducer.isFetching);
+  const [applications, setApplications] = useState([]);
+  const newApplications = useSelector(
+    (state) => state.applicationReducer.applications
+  );
+  const total = useSelector((state) => state.applicationReducer.count);
+  const isFetching = useSelector(
+    (state) => state.applicationReducer.isFetching
+  );
+  const token = useSelector((state) => state.authReducer.jwt);
   let size = 7;
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search);
@@ -69,52 +78,50 @@ const Subjects = () => {
     },
   });
 
+  function handleDelete(id) {
+    let promise = dispatch(deleteApplicationByIdAction(id, token));
+    promise.then(() => {
+      let pageTake = page ? currentPage - 1 : currentPage;
+      dispatch(getApplicationsByPageAndSizeAction(pageTake, size, token));
+      setPageCount(Math.ceil(total / size));
+      setApplications(newApplications);
+    });
+  }
+
   const dispatch = useDispatch();
 
   const handlePageClick = (number) => {
     setCurrentPage(number);
     let currentPath = history.location.pathname;
     history.push(currentPath + `?page=${number}`);
-    dispatch(getSubjectsByPageAndSizeAction(number - 1, size));
-    setSubjects(newSubjects);
+    dispatch(getApplicationsByPageAndSizeAction(number - 1, size, token));
+    setApplications(newApplications);
   };
 
   useEffect(() => {
     let pageTake = page ? currentPage - 1 : currentPage;
-    dispatch(getSubjectsByPageAndSizeAction(pageTake, size));
+    dispatch(getApplicationsByPageAndSizeAction(pageTake, size, token));
     setPageCount(Math.ceil(total / size));
-    setSubjects(newSubjects);
+    setApplications(newApplications);
   }, []);
 
   useEffect(() => {
-    if (newSubjects) {
-      setSubjects(newSubjects);
+    if (newApplications) {
+      setApplications(newApplications);
     }
-  }, [newSubjects]);
+  }, [newApplications]);
 
-  useEffect(() => {
-    dispatch(getSubjectsAction());
-  }, []);
+  function handleView(a) {
+    setApplication(a);
+  }
 
   const [isOpen, setIsOpen] = useState(false);
+  const [application, setApplication] = useState(null);
 
   function handleModal() {
     setIsOpen((prev) => !prev);
   }
-
-  function handleDelete(id){
-   let promise= dispatch(deleteSubjectByIdAction(id));
-   promise.then(()=>dispatch(getSubjectsAction()))
-
-  }
-
-  function handleEdit(id) {
-    let path = `/admin/subjects/edit/${id}`;
-    history.push(path);
-  }
-
   return (
-    console.log(total),
     <>
       <AuthMessageAlert />
       <AuthErrorAlert />
@@ -127,64 +134,73 @@ const Subjects = () => {
           height="700px"
           justifyContent="space-between"
         >
-          {isFetching || !subjects ? (
+          {isFetching || !applications ? (
             <SpinnerComponent />
+          ) : applications && applications.length == 0 ? (
+            <Text
+              pos="absolute"
+              left="50%"
+              zIndex="2"
+              fontSize="3xl"
+              fontWeight="bold"
+              top="50%"
+              style={{ transform: "translate(-50%, -50%)" }}
+            >
+              You have no applications..
+            </Text>
           ) : (
             <Box overflowX="auto" width="100%">
-              {isFetching || !subjects ? null : (
-                <Flex justifyContent="space-between" alignItems="center">
-                  <Text fontSize="2xl" fontWeight="bold">
-                    Subjects
-                  </Text>
-                  <Button
-                    colorScheme="whatsapp"
-                    onClick={() => handleModal()}
-                    margin="1rem"
-                  >
-                    Create subject
-                  </Button>
-                </Flex>
+              {isFetching || !applications ? null : (
+                <Text fontSize="2xl" fontWeight="bold">
+                  Applications
+                </Text>
               )}
               <Table variant="simple" colorScheme="blackAlpha">
                 <Thead>
                   <Tr>
                     <Th textAlign="center">Id</Th>
-                    <Th textAlign="center">Name</Th>
-                    <Th textAlign="center">Edit</Th>
+                    <Th textAlign="center">Post time</Th>
+                    <Th textAlign="center">View</Th>
                     <Th textAlign="center">Delete</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {subjects.map((sb, index) => {
-                    const { id, name } = sb;
+                  {applications.map((a, index) => {
+                    const { id, creationDate } = a;
+                    let date = dateHelper.normalizedDateWithTime(creationDate);
                     return (
                       <Tr key={index}>
                         <Th textAlign="center">{id}</Th>
-                        <Td textAlign="center">{name}</Td>
+                        <Td textAlign="center">{date}</Td>
                         <Td textAlign="center">
                           <Button
-                            color='white'
-                            colorScheme="yellow"
-                            onClick={() => handleEdit(id)}
+                            colorScheme="blue"
+                            onClick={() => handleView(a)}
                           >
-                            Edit
+                            View
                           </Button>
                         </Td>
                         <Td textAlign="center">
-                          <Button colorScheme="pink" onClick={()=>handleDelete(id)}>Delete</Button>
+                          <Button
+                            onClick={() => handleDelete(id)}
+                            colorScheme="pink"
+                          >
+                            Delete
+                          </Button>
                         </Td>
                       </Tr>
                     );
                   })}
-                  <CreateSubjectModal
-                    onClick={() => handleModal()}
+                  <ApplicationViewModal
+                    application={application}
+                    onClick={setIsOpen((prev) => !prev)}
                     value={isOpen}
                   />
                 </Tbody>
               </Table>
             </Box>
           )}
-          {!isFetching && (
+          {(!isFetching || applications) && (
             <Pagination
               pagesCount={pagesCount}
               currentPage={currentPage}
@@ -264,4 +280,4 @@ const Subjects = () => {
   );
 };
 
-export default Subjects;
+export default Applications;

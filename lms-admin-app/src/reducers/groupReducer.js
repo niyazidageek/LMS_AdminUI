@@ -3,6 +3,7 @@ import { actionTypes } from "../actions/const";
 const initialState = {
   group: null,
   groups: null,
+  count:null
 };
 
 function groupReducer(state = initialState, action) {
@@ -13,7 +14,8 @@ function groupReducer(state = initialState, action) {
       };
     case actionTypes.GET_GROUPS:
       return {
-        groups: action.payload,
+        groups: action.payload.data,
+        count:action.payload.count
       };
     default:
       return state;

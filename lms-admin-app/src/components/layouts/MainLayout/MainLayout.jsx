@@ -23,6 +23,8 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
+import { BiMessage } from "react-icons/bi";
+import {BsPersonPlus} from "react-icons/bs"
 import {
   FiHome,
   FiTrendingUp,
@@ -40,22 +42,21 @@ import {
   FiEdit2,
   FiFileText,
 } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthErrorAlert } from "../../alerts/AuthErrorAlert";
 import { AuthMessageAlert } from "../../alerts/AuthMessageAlert";
+import { actionTypes } from "../../../actions/const";
 
 const LinkItems = [
-  { name: "Home", icon: FiHome, path: "/admin/home" },
   { name: "Groups", icon: FiUsers, path: "/admin/groups/all" },
   { name: "Subjects", icon: FiBook, path: "/admin/subjects/all" },
-  { name: "Lessons", icon: FiEdit2, path: "/admin/lessons/all" },
-  { name: "Quizzes", icon: FiFileText, path: "/admin/quizzes/all" },
-  { name: "Questions", icon: FiAlignJustify, path: "/admin/questions/all" },
-  { name: "Options", icon: FiDisc, path: "/admin/options/all" },
+  // { name: "Applications", icon: BiMessage, path: "/admin/applications/all" },
+  { name: "Add a new user", icon: BsPersonPlus, path: "/admin/register" },
 ];
 
 export default function MainLayout({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
       <AuthErrorAlert />
@@ -100,12 +101,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       h="full"
       {...rest}
     >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
-      </Flex>
+
       {LinkItems.map((link) => (
         <NavLink path to={link.path}>
           <NavItem key={link.name} icon={link.icon}>
@@ -119,7 +115,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
 
 const NavItem = ({ icon, children, ...rest }) => {
   return (
-    <Link href="#" style={{ textDecoration: "none" }}>
+    <Link style={{ textDecoration: "none" }}>
       <Flex
         align="center"
         p="4"
@@ -150,6 +146,7 @@ const NavItem = ({ icon, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  const dispatch = useDispatch()
   const name = useSelector((state) => state.authReducer.name);
   const surname = useSelector((state) => state.authReducer.surname);
   const profileName = useSelector((state) => state.authReducer.profileName);
@@ -174,22 +171,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
         icon={<FiMenu />}
       />
 
-      <Text
-        display={{ base: "flex", md: "none" }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold"
-      >
-        Logo
-      </Text>
-
       <HStack spacing={{ base: "0", md: "6" }}>
-        <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
-          icon={<FiBell />}
-        />
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton
@@ -234,7 +216,15 @@ const MobileNav = ({ onOpen, ...rest }) => {
               <MenuItem>Settings</MenuItem>
               <MenuItem>Billing</MenuItem> */}
               {/* <MenuDivider /> */}
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem
+                onClick={() =>
+                  dispatch({
+                    type: actionTypes.LOG_OUT,
+                  })
+                }
+              >
+                Sign out
+              </MenuItem>
             </MenuList>
           </Menu>
         </Flex>

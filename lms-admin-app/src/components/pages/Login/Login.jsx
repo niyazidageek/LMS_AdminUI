@@ -32,9 +32,11 @@ const Login = () => {
     dispatch(signInAction(values));
   }
 
-  console.log(process.env.REACT_APP_API);
+  useEffect(()=>{
+    console.log('ddadsa');
+  },[])
 
-  if (isLoggedIn) return <Redirect to="/admin/home" />;
+  if (isLoggedIn) return <Redirect to="admin/groups/all" />;
 
   return (
     <>

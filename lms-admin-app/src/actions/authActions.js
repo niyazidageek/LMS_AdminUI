@@ -18,7 +18,7 @@ export const signInAction = (data) => async (dispatch) =>{
         }
         else{
             let date = new Date;
-            date = new Date(date.getTime()+30*60000);
+            date = new Date(date.getTime()+120*60000);
             date = date.toISOString();
             resp.data.expiryDate = date;
             dispatch({
@@ -67,6 +67,11 @@ export const signUpAction = (data,token) => async (dispatch) =>{
 
         dispatch({
             type:actionTypes.DISABLE_IS_FETCHING
+        })
+
+        dispatch({
+            type:actionTypes.SET_AUTH_MESSAGE,
+            payload:resp.data
         })
 
     } catch (error) {

@@ -1,4 +1,4 @@
-import { getStudents } from "../services/studentService";
+import { getStudents, searchAllStudents } from "../services/studentService";
 import { actionTypes } from "./const";
 
 export const getStudentsAction = () => async (dispatch)=>{
@@ -17,6 +17,35 @@ export const getStudentsAction = () => async (dispatch)=>{
         dispatch({
             type:actionTypes.DISABLE_IS_FETCHING
         })
+
+    } catch (error) {
+        if(error.message === "Network Error"){
+            dispatch({
+                type:actionTypes.SET_AUTH_ERROR,
+                payload:error
+            })
+        }
+        else{
+            console.log(error)
+            dispatch({
+                type:actionTypes.SET_AUTH_ERROR,
+                payload:error.response.data
+            })
+        }   
+        dispatch({
+            type:actionTypes.DISABLE_IS_FETCHING
+        })
+    }
+}
+
+
+export const searchAllStudentsAction = (match) => async (dispatch)=>{
+    try {
+     
+        let resp = await searchAllStudents(match);
+
+
+        return resp.data;
 
     } catch (error) {
         if(error.message === "Network Error"){

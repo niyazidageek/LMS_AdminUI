@@ -49,7 +49,7 @@ const CreateSubjectModal = ({ onClick, value }) => {
       <Modal isOpen={value} onClose={onClick}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create a group</ModalHeader>
+          <ModalHeader>Create a subject</ModalHeader>
           <ModalCloseButton />
 
           <Formik
@@ -60,7 +60,7 @@ const CreateSubjectModal = ({ onClick, value }) => {
             onSubmit={handleSubmit}
           >
             <Form>
-              <ModalBody pb={6}>
+              <ModalBody >
                 <Stack spacing={6}>
                   <FormControl id="name">
                     <Field name="name">
@@ -78,7 +78,7 @@ const CreateSubjectModal = ({ onClick, value }) => {
                     </Field>
                   </FormControl>
 
-                  <Stack spacing={8}>
+                  <Stack spacing={3}>
                     <Stack
                       direction={{ base: "column", sm: "row" }}
                       align={"start"}

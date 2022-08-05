@@ -19,3 +19,12 @@ export const createSubject = (data, token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+
+export const getSubjectsByPageAndSize = (page, size) => {
+  return httpClient.get("subject/GetSubjectsByPageAndSize/"+page+"/"+size);
+};
+
+export const deleteSubjectById=(id)=>{
+  return httpClient.delete("subject/deletesubject/"+id);
+}

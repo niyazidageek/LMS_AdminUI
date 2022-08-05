@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ajna/pagination": "^1.4.13",
     "@chakra-ui/form-control": "^1.4.2",
     "@chakra-ui/react": "^1.6.10",
     "@craco/craco": "^6.4.0",
@@ -44,6 +45,7 @@
     "redux-thunk": "^2.3.0",
     "remark-gfm": "^3.0.1",
     "semantic-ui-react": "^2.0.4",
+    "universal-cookie": "^4.0.4",
     "web-vitals": "^1.1.2",
     "yup": "^0.32.11"
   },

@@ -71,7 +71,7 @@ const EditSubject = () => {
             <Flex align={"center"} justify={"center"}>
               <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
                 <Stack align={"center"}>
-                  <Heading fontSize={"4xl"}>Edit group</Heading>
+                  <Heading fontSize={"4xl"}>Edit subject</Heading>
                 </Stack>
                 <Box
                   boxSize={"md"}
@@ -107,7 +107,7 @@ const EditSubject = () => {
                           </Field>
                         </FormControl>
 
-                        <Stack spacing={8}>
+                        <Stack spacing={3}>
                           <Stack
                             direction={{ base: "column", sm: "row" }}
                             align={"start"}

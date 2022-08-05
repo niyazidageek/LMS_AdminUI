@@ -4,8 +4,8 @@ export const getGroupById = (id) => {
   return httpClient.get("group/getgroupbyid/" + id);
 };
 
-export const getGroups = () => {
-  return httpClient.get("group/getgroups");
+export const getGroups = (page, size) => {
+  return httpClient.get("group/getgroupsbycount/" +page + "/" + size);
 };
 
 export const updateGroup = (data, id, token) => {
@@ -19,3 +19,7 @@ export const createGroup = (data, token) => {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
+
+export const deleteGroupById = (id) => {
+  return httpClient.delete("group/deletegroup/" + id);
+}

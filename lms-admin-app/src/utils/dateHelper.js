@@ -9,8 +9,10 @@ class DateHelper{
   }
 
   normalizedDateWithTime(date){
-    date = Date.parse(date);
-    date = new Date(date);
+    // date = Date.parse(date);
+ 
+    date = new Date(date) 
+    console.log(date.toLocaleString())
     date = date.toLocaleString();
     return date;
   }
